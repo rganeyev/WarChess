@@ -1,0 +1,104 @@
+﻿Build started 28.03.2011 14:28:25.
+     1>Project "e:\Work\WarChess\server\server.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\server.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\boost\boost_1_44" /I. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt amf\AMFArrayWriter.cpp amf\AMFObjectWriter.cpp amf\AMFReader.cpp amf\AMFWriter.cpp game\BaseConnection.cpp game\Connection.cpp game\Player.cpp game\PlayerManager.cpp game\Settings.cpp pugixml\pugixml.cpp pugixml\pugixpath.cpp util\AsyncIOSystem.cpp util\CircularBuffer.cpp util\String.cpp util\Util.cpp Console.cpp CrossDomainPolicyResolver.cpp main.cpp Server.cpp
+         Server.cpp
+         main.cpp
+         CrossDomainPolicyResolver.cpp
+         Console.cpp
+         Util.cpp
+         String.cpp
+         CircularBuffer.cpp
+         AsyncIOSystem.cpp
+         pugixpath.cpp
+     1>c:\program files\microsoft visual studio 10.0\vc\include\xutility(2227): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files\microsoft visual studio 10.0\vc\include\xutility(2212) : see declaration of 'std::_Copy_impl'
+                 e:\work\warchess\server\pugixml\pugixpath.cpp(764) : see reference to function template instantiation '_OutIt std::copy<pugi::xpath_node*,pugi::xpath_node*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=pugi::xpath_node *,
+                     _InIt=pugi::xpath_node *
+                 ]
+                 e:\work\warchess\server\pugixml\pugixpath.cpp(689) : see reference to function template instantiation 'void pugi::xpath_node_set::append<pugi::xpath_node_set::const_iterator>(Iterator,Iterator)' being compiled
+                 with
+                 [
+                     Iterator=pugi::xpath_node_set::const_iterator
+                 ]
+     1>c:\program files\microsoft visual studio 10.0\vc\include\xutility(2227): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files\microsoft visual studio 10.0\vc\include\xutility(2212) : see declaration of 'std::_Copy_impl'
+                 e:\work\warchess\server\pugixml\pugixpath.cpp(773) : see reference to function template instantiation '_OutIt std::copy<Iterator,pugi::xpath_node*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=pugi::xpath_node *,
+                     Iterator=pugi::xpath_node_set::const_iterator,
+                     _InIt=pugi::xpath_node_set::const_iterator
+                 ]
+         pugixml.cpp
+         Settings.cpp
+         PlayerManager.cpp
+         Player.cpp
+         Connection.cpp
+         BaseConnection.cpp
+         AMFWriter.cpp
+         AMFReader.cpp
+         AMFObjectWriter.cpp
+         AMFArrayWriter.cpp
+         Generating Code...
+       ManifestResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\server.exe.embed.manifest.res" Debug\server_manifest.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Work\WarChess\server\Debug\server.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\boost\boost_1_44\lib" ws2_32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\server.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Work\WarChess\server\Debug\server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"E:\Work\WarChess\server\Debug\server.lib" /MACHINE:X86 Debug\server.exe.embed.manifest.res
+         Debug\AMFArrayWriter.obj
+         Debug\AMFObjectWriter.obj
+         Debug\AMFReader.obj
+         Debug\AMFWriter.obj
+         Debug\BaseConnection.obj
+         Debug\Connection.obj
+         Debug\Player.obj
+         Debug\PlayerManager.obj
+         Debug\Settings.obj
+         Debug\pugixml.obj
+         Debug\pugixpath.obj
+         Debug\AsyncIOSystem.obj
+         Debug\CircularBuffer.obj
+         Debug\String.obj
+         Debug\Util.obj
+         Debug\Console.obj
+         Debug\CrossDomainPolicyResolver.obj
+         Debug\main.obj
+         Debug\Server.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\server.exe.embed.manifest" /manifest Debug\server.exe.intermediate.manifest
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\server.exe.embed.manifest.res" Debug\server_manifest.rc 
+       LinkEmbedManifest:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Work\WarChess\server\Debug\server.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\boost\boost_1_44\lib" ws2_32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\server.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Work\WarChess\server\Debug\server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"E:\Work\WarChess\server\Debug\server.lib" /MACHINE:X86 Debug\server.exe.embed.manifest.res
+         Debug\AMFArrayWriter.obj
+         Debug\AMFObjectWriter.obj
+         Debug\AMFReader.obj
+         Debug\AMFWriter.obj
+         Debug\BaseConnection.obj
+         Debug\Connection.obj
+         Debug\Player.obj
+         Debug\PlayerManager.obj
+         Debug\Settings.obj
+         Debug\pugixml.obj
+         Debug\pugixpath.obj
+         Debug\AsyncIOSystem.obj
+         Debug\CircularBuffer.obj
+         Debug\String.obj
+         Debug\Util.obj
+         Debug\Console.obj
+         Debug\CrossDomainPolicyResolver.obj
+         Debug\main.obj
+         Debug\Server.obj
+         server.vcxproj -> E:\Work\WarChess\server\Debug\server.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\server.unsuccessfulbuild".
+         Touching "Debug\server.lastbuildstate".
+     1>Done Building Project "e:\Work\WarChess\server\server.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:48.52

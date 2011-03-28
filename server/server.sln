@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server.vcxproj", "{FD385D0D-5252-47B8-A49C-D802D5751D47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD385D0D-5252-47B8-A49C-D802D5751D47}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FD385D0D-5252-47B8-A49C-D802D5751D47}.Debug|Win32.Build.0 = Debug|Win32
+		{FD385D0D-5252-47B8-A49C-D802D5751D47}.Release|Win32.ActiveCfg = Release|Win32
+		{FD385D0D-5252-47B8-A49C-D802D5751D47}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

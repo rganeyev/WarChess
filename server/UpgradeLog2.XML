@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="server">
+</Property><Property Name="Solution File" Value="E:\Work\Flash\server\server.sln">
+</Property><Property Name="User Options File" Value="E:\Work\Flash\server\server.suo">
+</Property><Property Name="Date" Value="10 декабря 2010 г.">
+</Property><Property Name="Time" Value="6:05">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="2" Project="" Source="server.sln" Description="Error creating backup file: E:\Work\Flash\server\server.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="server.suo" Description="File successfully backed up as E:\Work\Flash\server\server.suo.old">
+</Event><Event ErrorLevel="0" Project="server" Source="server.vcproj" Description="Converting project file 'E:\Work\Flash\server\server.vcproj'.">
+</Event><Event ErrorLevel="1" Project="server" Source="server.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="server" Source="server.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="server" Source="server.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="server" Source="server.vcproj" Description="Done converting to new project file 'E:\Work\Flash\server\server.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="server" Source="server.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="server.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="server.sln" Description="Converted">
+</Event></UpgradeLog>
