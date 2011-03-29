@@ -59,37 +59,37 @@ void Player::init() {
 }
 
 void Player::lock() {
-	printf("lock %d\n", id);
+	//printf("lock %d\n", id);
 	rwmutex.lock();
 }
 
 void Player::unlock() {
-	printf("unlock %d\n", id);
+	//printf("unlock %d\n", id);
 	rwmutex.unlock();
 }
 
 void Player::lock_shared() {
-	printf("lock shared %d\n", id);
+	//printf("lock shared %d\n", id);
 	rwmutex.lock_shared();
 }
 
 void Player::unlock_shared() {
-	printf("unlock shared %d\n", id);
+	//printf("unlock shared %d\n", id);
 	rwmutex.unlock_shared();
 }
 
 void Player::lock_upgrade() {
-	printf("lock upgrade %d\n", id);
+	//printf("lock upgrade %d\n", id);
 	rwmutex.lock_upgrade();
 }
 
 void Player::unlock_upgrade() {
-	printf("unlock upgrade %d\n", id);
+	//printf("unlock upgrade %d\n", id);
 	rwmutex.unlock_upgrade();
 }
 
 void Player::unlock_upgrade_and_lock() {
-	printf("unlock_upgrade_and_lock %d\n", id);
+	//printf("unlock_upgrade_and_lock %d\n", id);
 	rwmutex.unlock_upgrade_and_lock();
 }
 AMFObjectWriter Player::beginWrite( AMFArrayWriter* writer ) {
@@ -134,16 +134,16 @@ void Player::writeExperience( AMFObjectWriter* playerWriter )  {
 	playerWriter->writeNumber(String("exp", 3), experience);
 }
 
-void Player::addSentChallenge( unsigned int opp_id )
+void Player::addSentChallenge( unsigned int oppId )
 {
 	lock();
-		sentChallenges.insert(opp_id);
+	sentChallenges.insert(oppId);
 	unlock();
 }
 
-void Player::addReceivedChallenge( unsigned int opp_id )
+void Player::addReceivedChallenge( unsigned int oppId )
 {
 	lock();
-		receivedChallenges.insert(opp_id);
+		receivedChallenges.insert(oppId);
 	unlock();
 }

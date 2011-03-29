@@ -13,7 +13,7 @@ public:
 
 	static PlayerManager* instance();
 
-	Player* getPlayer(int id);
+	Player* getPlayer(unsigned int id);
 	Player* addPlayer(Player* player);
 	bool addPlayerToOnline(unsigned int id);
 	bool removePlayerFromOnline(unsigned int id);

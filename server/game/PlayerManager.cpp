@@ -51,6 +51,8 @@ PlayerManager::PlayerManager() {
 	//my id
 	Player* fakePlayer = new Player(3371777, String("PASSWORD", 8));
 	players->set(numPlayers, fakePlayer);
+	
+	//addPlayer(fakePlayer);
 
 	players->sortById();
 
@@ -67,7 +69,7 @@ PlayerManager::~PlayerManager() {
 	_instance = NULL;
 }
 
-Player* PlayerManager::getPlayer( int id ) {
+Player* PlayerManager::getPlayer(unsigned int id ) {
 	FixedArray<Player*>* ptr = _players.addRef();
 	unsigned int offset = ptr->findById(id);
 	Player* player = (offset == ptr->size()) ? NULL : ptr->get(offset);

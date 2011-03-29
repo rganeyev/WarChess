@@ -42,8 +42,8 @@ public:
 
 	void initialize();
 	void commit();
-	void addSentChallenge(unsigned int opp_id);
-	void addReceivedChallenge(unsigned int opp_id);
+	void addSentChallenge(unsigned int oppId);
+	void addReceivedChallenge(unsigned int oppId);
 
 	
 	void writeGold(AMFObjectWriter* playerWriter);

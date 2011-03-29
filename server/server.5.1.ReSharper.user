@@ -31,25 +31,19 @@
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:PlayerManager.h" caret="0" fromTop="0" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:PlayerManager.cpp" caret="1438" fromTop="0" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:GameEvent.h" caret="0" fromTop="0" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="1330" fromTop="21" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="5351" fromTop="6" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="724" fromTop="17" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8116" fromTop="11" />
     </RecentFiles>
     <RecentEdits>
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.cpp" caret="2968" fromTop="18" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.h" caret="1326" fromTop="11" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.h" caret="180" fromTop="6" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.cpp" caret="3094" fromTop="23" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.cpp" caret="3051" fromTop="22" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Result.h" caret="275" fromTop="12" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="699" fromTop="15" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8323" fromTop="18" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8239" fromTop="19" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8190" fromTop="14" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="741" fromTop="13" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8431" fromTop="23" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7983" fromTop="16" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7710" fromTop="7" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8176" fromTop="12" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="692" fromTop="15" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8307" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8223" fromTop="19" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8174" fromTop="14" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7693" fromTop="7" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8160" fromTop="12" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="907" fromTop="16" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="1748" fromTop="21" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="1822" fromTop="15" />
@@ -63,8 +57,14 @@
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="2402" fromTop="11" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="4010" fromTop="20" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="3907" fromTop="16" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="6813" fromTop="7" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7532" fromTop="22" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="6799" fromTop="7" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="5883" fromTop="12" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="5617" fromTop="3" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7680" fromTop="2" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8307" fromTop="5" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="7967" fromTop="11" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="8307" fromTop="19" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="692" fromTop="16" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

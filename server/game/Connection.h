@@ -25,9 +25,9 @@ public:
 	bool do_getOnlinePlayers(unsigned int messageLength);
 	bool do_inviteToPlay(unsigned int messageLength);
 	bool do_receiveInvite(unsigned int messageLength);
+	bool do_acceptInvite(unsigned int messageLength);
 	
-	Result createNewPlayer(unsigned int player_id, Player** pPlayer);
-	Result getChallenge(unsigned int opp_id);
+	Result createNewPlayer(unsigned int id, Player** pPlayer);
 	//TODO: have this methods implemented
 	/*
 		bool do_sendPlayerDetails();

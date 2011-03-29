@@ -53,7 +53,7 @@ Connection::~Connection() {
 bool Connection::processMessage() {
 	unsigned int position = buffer.getReadPosition();
 	unsigned int bytesAvailable = buffer.readAvailable();
-
+	printf("received %u bytes \n", bytesAvailable);
 	while (true) {
 		// 12 = 8 + 4
 		if (bytesAvailable < 12) {
@@ -202,7 +202,7 @@ void Connection::send( SOCKET sock, GameEvent gameEvent, int result, const char*
 
 	unsigned int messageSize = dataSize + 12;
 
-	printf("%u\n", messageSize);
+	printf("sent %u bytes\n", messageSize);
 	asyncData->messageSize = htonl(messageSize);
 	asyncData->gameEvent = htonl(gameEvent);
 	asyncData->result = htonl(result);
@@ -221,7 +221,7 @@ void Connection::skipMessage( unsigned int length ) {
 	buffer.setReadPosition(buffer.getReadPosition() + length);
 }
 
-Result Connection::createNewPlayer( unsigned int player_id, Player** pPlayer ) {
+Result Connection::createNewPlayer( unsigned int id, Player** pPlayer ) {
 	char password[PasswordLength] = { 'P', 'A', 'S', 'S', 'W', 'O', 'R', 'D' };
 	// a code to generate random one
 	/*
@@ -230,7 +230,7 @@ Result Connection::createNewPlayer( unsigned int player_id, Player** pPlayer ) {
 		}*/
 	
 
-	Player* player = new Player(player_id, String(password, PasswordLength, false));
+	Player* player = new Player(id, String(password, PasswordLength, false));
 	player->lock();
 
 	PlayerManager* playerManager = PlayerManager::instance();
@@ -261,7 +261,6 @@ Result Connection::createNewPlayer( unsigned int player_id, Player** pPlayer ) {
 	}
 
 	*pPlayer = foundPlayer;
-
 	return result;
 }
 
@@ -271,7 +270,7 @@ bool Connection::do_getOnlinePlayers( unsigned int messageLength )
 	std::set<unsigned int> online = playerManager->getOnlinePlayers();
 
 	//is that enough?
-	char tmp[2000];
+	char tmp[200];
 
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFArrayWriter arrayWriter = AMFArrayWriter(&streamWriter);
@@ -291,20 +290,24 @@ bool Connection::do_getOnlinePlayers( unsigned int messageLength )
 bool Connection::do_inviteToPlay( unsigned int messageLength )
 {
 	AMFReader request = AMFReader(buffer, messageLength);
-	enforce(request.readArgName() == String("oppId", 5));
-	unsigned int opp_id = request.readUnsignedInt();
-	player->addSentChallenge(opp_id);
+	enforce(request.readArgName() == String("id", 2));
+	unsigned int oppId = request.readUnsignedInt();
 	PlayerManager* playerManager = PlayerManager::instance();
-	Player* victim = playerManager->getPlayer(opp_id);
-
-	char tmp[4];
+	Player* opponent = playerManager->getPlayer(oppId);
+	if (opponent == NULL) {
+		return sendError(InviteToPlay, PlayerNotFound);
+	}
+	player->addSentChallenge(oppId);
+	
+	char tmp[200];
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
 	objectWriter.begin();
+		objectWriter.writeNumber(String("id", 2), oppId);
 	objectWriter.end();
 
 	char tmp2[200];
-	victim->addReceivedChallenge(player->id);
+	opponent->addReceivedChallenge(player->id);
 	AMFWriter streamWriterForInvite = AMFWriter(tmp2, sizeof(tmp2));
 	objectWriter = AMFObjectWriter(&streamWriterForInvite);
 	objectWriter.begin();
@@ -314,8 +317,3 @@ bool Connection::do_inviteToPlay( unsigned int messageLength )
 	return sendRespond(InviteToPlay, &streamWriter) && sendRespond(ReceiveInvite, & streamWriterForInvite);
 }
 
-Result Connection::getChallenge( unsigned int opp_id)
-{
-	player->addReceivedChallenge(opp_id);
-	return Success;
-}
