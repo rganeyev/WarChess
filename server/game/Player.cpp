@@ -147,3 +147,17 @@ void Player::addReceivedChallenge( unsigned int oppId )
 		receivedChallenges.insert(oppId);
 	unlock();
 }
+
+void Player::removeReceivedChallenge( unsigned int oppId )
+{
+	lock();
+		receivedChallenges.erase(oppId);
+	unlock();
+}
+
+void Player::clearSentChallenges()
+{
+	lock();
+		sentChallenges.clear();
+	unlock();
+}

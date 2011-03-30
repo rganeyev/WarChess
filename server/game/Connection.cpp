@@ -38,15 +38,19 @@ Connection::Connection( SOCKET sock ) : BaseConnection(sock, 32*1024) {
 
 Connection::~Connection() {
 	if (player != NULL) {
-		player->lock();
-		//TODO: clean challenges
-
-
-		player->unlock();
-		//remove from online
 		PlayerManager* playerManager = PlayerManager::instance();
+		
 		playerManager->removePlayerFromOnline(player->id);
 
+		for (std::set<unsigned int>::iterator it = player->sentChallenges.begin(); it != player->sentChallenges.end(); ++it) {
+			//connect to opponents and erase
+			Player* opponent = playerManager->getPlayer(*it);
+			opponent->removeReceivedChallenge(player->id);
+		}
+
+		player->clearSentChallenges();
+
+		//TODO: remove player connection
 	}
 }
 
@@ -56,7 +60,7 @@ bool Connection::processMessage() {
 	printf("received %u bytes \n", bytesAvailable);
 	while (true) {
 		// 12 = 8 + 4
-		if (bytesAvailable < 12) {
+		if (bytesAvailable < 8) {
 			break;
 		}
 
@@ -66,7 +70,7 @@ bool Connection::processMessage() {
 			break;
 		}
 
-		if (messageLength < 8) {
+		if (messageLength < 4) {
 			return false;
 		} else {
 			if (!readMessage(messageLength)) {
@@ -143,6 +147,7 @@ bool Connection::do_auth( unsigned int messageLength ) {
 	player->unlock();
 	{
 		this->player = player;
+		player->connection = this;
 		//add player to online
 		playerManager->addPlayerToOnline(player->id);
 
@@ -266,23 +271,26 @@ Result Connection::createNewPlayer( unsigned int id, Player** pPlayer ) {
 
 bool Connection::do_getOnlinePlayers( unsigned int messageLength )
 {
+	
+	AMFReader request = AMFReader(buffer, messageLength);
+	request.end();
+	
 	PlayerManager* playerManager = PlayerManager::instance();
 	std::set<unsigned int> online = playerManager->getOnlinePlayers();
 
 	//is that enough?
-	char tmp[200];
-
+	char tmp[2000];
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFArrayWriter arrayWriter = AMFArrayWriter(&streamWriter);
 	arrayWriter.begin(online.size());
 	size_t i = -1;
 	for (std::set<unsigned int>::iterator it = online.begin(); it != online.end(); ++it) {
 		AMFObjectWriter playerWriter = arrayWriter.addObject(toString(++i));
-			playerWriter.begin();
-				playerWriter.writeNumber(String("id", 2), *it);
-			playerWriter.end();
-		arrayWriter.end();
+		playerWriter.begin();
+			playerWriter.writeNumber(String("id", 2), *it);
+		playerWriter.end();
 	}
+	arrayWriter.end();
 
 	return sendRespond(GetOnlinePlayers, &streamWriter);
 }
@@ -292,11 +300,16 @@ bool Connection::do_inviteToPlay( unsigned int messageLength )
 	AMFReader request = AMFReader(buffer, messageLength);
 	enforce(request.readArgName() == String("id", 2));
 	unsigned int oppId = request.readUnsignedInt();
+	request.end();
+
 	PlayerManager* playerManager = PlayerManager::instance();
 	Player* opponent = playerManager->getPlayer(oppId);
 	if (opponent == NULL) {
 		return sendError(InviteToPlay, PlayerNotFound);
 	}
+	if (player->sentChallenges.find(oppId) != player->sentChallenges.end()) {
+		return sendError(InviteToPlay, PlayerAlreadyChallenged);
+	} 
 	player->addSentChallenge(oppId);
 	
 	char tmp[200];
@@ -314,6 +327,37 @@ bool Connection::do_inviteToPlay( unsigned int messageLength )
 		objectWriter.writeNumber(String("id", 2), player->id);
 	objectWriter.end();
 
-	return sendRespond(InviteToPlay, &streamWriter) && sendRespond(ReceiveInvite, & streamWriterForInvite);
+	return sendRespond(InviteToPlay, &streamWriter) && (opponent->connection->sendRespond(ReceiveInvite, & streamWriterForInvite));
+}
+
+bool Connection::do_acceptInvite( unsigned int messageLength )
+{
+	//receive id & response
+	AMFReader request = AMFReader(buffer, messageLength);
+	unsigned int response = 0;
+	unsigned int id = 0;
+	while (!request.empty()) {
+		String argName = request.readArgName();
+		if (argName == String("response", 8)) {
+			response = request.readUnsignedInt();
+		} else if (argName == String("id", 2)) {
+			id = request.readUnsignedInt();
+		}
+	}
+	request.end();
+
+	char tmp[200];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFObjectWriter objectWriter(&streamWriter);
+
+	//if accepted game
+	if (response == 0) {
+		objectWriter.begin();
+			//TODO: add moves here
+		objectWriter.end();
+		return sendRespond(GameStart, &streamWriter);
+	}
+
+	//return sendError(AcceptInvite, )
 }
 

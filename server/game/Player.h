@@ -29,6 +29,7 @@ struct PlayerData {
 
 	unsigned int registrationConfirmed : 1;
 	char password[PasswordLength];
+	Connection* connection;
 };
 
 class Player : public PlayerData {
@@ -44,6 +45,8 @@ public:
 	void commit();
 	void addSentChallenge(unsigned int oppId);
 	void addReceivedChallenge(unsigned int oppId);
+	void removeReceivedChallenge(unsigned int oppId);
+	void clearSentChallenges();
 
 	
 	void writeGold(AMFObjectWriter* playerWriter);

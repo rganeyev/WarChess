@@ -24,7 +24,6 @@ public:
 	bool do_auth(unsigned int messageLength);
 	bool do_getOnlinePlayers(unsigned int messageLength);
 	bool do_inviteToPlay(unsigned int messageLength);
-	bool do_receiveInvite(unsigned int messageLength);
 	bool do_acceptInvite(unsigned int messageLength);
 	
 	Result createNewPlayer(unsigned int id, Player** pPlayer);

@@ -3,6 +3,7 @@
 	import fl.controls.LabelButton;
 	import fl.controls.Label;
 	import fl.controls.List;
+	import fl.controls.TextInput;
 	import fl.core.UIComponent;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -11,6 +12,7 @@
 	import flash.net.Socket;
 	import flash.net.ObjectEncoding;
 	import flash.ui.Mouse;
+	import fl.events.ComponentEvent;
 	
 	/**
 	 * ...
@@ -23,7 +25,7 @@
 		//public var board : Board;
 		public var connection: Connection;
 		
-		private var myId: int = 3371777;
+		private var myId: uint = 3371777;
 		private var myPassword: String = "PASSWORD";
 		
 		private var challengeLabelButton: LabelButton;
@@ -36,6 +38,7 @@
 		private var onlineLabel: Label;
 		private var sentChallengeLabel: Label;
 		private var receivedChallengeLabel: Label;
+		private var textInput: TextInput;
 		
 		
 		
@@ -48,7 +51,15 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			// entry point
+			textInput = new TextInput();
+			textInput.addEventListener(ComponentEvent.ENTER, start);
+			addTextInput(textInput, 0, 0, 100, 30);
 			
+		}
+		
+		private function start(e: ComponentEvent): void {
+			myId = uint(textInput.text);
+			removeChild(textInput);
 			//adding onlineList && label
 			onlineList = new List();
 			addList(onlineList, 0, 30, 100, 200);
@@ -91,28 +102,32 @@
 		
 		private function addLabel(label: Label, x: int, y: int, width: int, height: int, text: String): void {
 			label.text = text;
-			addObj(label, x, y, width, height);
+			addComponent(label, x, y, width, height);
 		}
 		private function addList(list : List, x: int, y: int, width: int, height: int): void {
-			addObj(list, x, y, width, height);
+			addComponent(list, x, y, width, height);
+		}
+		
+		private function addTextInput(inp: TextInput, x: int, y: int, width: int, height: int): void {
+			addComponent(inp, x, y, width, height);
 		}
 		
 		private function addLabelButton(button: LabelButton, x: int, y: int, width: int, 
 										height: int, text: String, clickFunction: Function): void {
 			button.label = text;
 			button.addEventListener(MouseEvent.CLICK, clickFunction);
-			addObj(button, x, y, width, height);
+			addComponent(button, x, y, width, height);
 		}
 		
-		private function addObj(obj: UIComponent, x: int, y: int, width: int, height: int): void {
-			obj.setSize(width, height);
-			obj.x = x;
-			obj.y = y;
-			addChild(obj);
+		private function addComponent(component: UIComponent, x: int, y: int, width: int, height: int): void {
+			component.setSize(width, height);
+			component.x = x;
+			component.y = y;
+			addChild(component);
 		}
 		
 		private function onConnected(): void {
-			trace("Connected. Now registering...");
+			//trace("Connected. Now registering...");
 			register();	
 		}
 		
@@ -123,23 +138,31 @@
 
 		private function onAuthComplete(result:uint, response: Object): void {
 			checkResult(result);
-			//getOnlinePlayers();
+			getOnlinePlayers();
 		}
 		
+		//response = Array of objects, containing id.
 		private function onGotOnlineList(result:uint, response: Object): void {
-			//response = Array of objects, containing id.
 			checkResult(result);
 			
 			trace("Online opponents: ");
 			for (var i : uint = 0; i < response.length; i++) {
 				trace(response[i].id);
-				onlineList.addItem( {label: response[i].id} );
+				var caption: String = int(response[i].id).toString();
+				if (response[i].id == myId) {
+					caption += "me";
+				}
+				onlineList.addItem( {label: caption, data: response[i].id} );
 			}
 			
 		}
 		
 		private function onReceivedAnswerOnInvitation(result: uint, response: Object): void {
 			checkResult(result);
+			if (result != 0) {
+				return;
+			}
+
 			trace("invited " + response.id);
 			sentChallengeList.addItem( {label: response.id} )
 		}
@@ -155,19 +178,23 @@
 		}
 		
 		private function auth(): void {
-			trace("Logging in.");
+			//trace("Logging in.");
 			connection.send(GameEvent.Auth, { id: myId, password: myPassword } );
 		}
 		
 		private function getOnlinePlayers() : void {
-			trace("Getting online players");
-			connection.send(GameEvent.GetOnlinePlayers, null );
+			//trace("Getting online players");
+			connection.send(GameEvent.GetOnlinePlayers, {} );
 		}
 		
 		private function inviteToPlay(e: MouseEvent) : void {
-			//var opp_id: uint = onlineList.selectedItem.label;
-			var oppId: uint = 3371777;
-			trace("Challenge " + oppId);
+			if (onlineList.selectedItem == null) {
+				//trace("select online player");
+				return;
+			}
+			var oppId: uint = onlineList.selectedItem.data;
+			//var oppId: uint = 3371777;
+			//trace("Challenge " + oppId);
 			connection.send(GameEvent.InviteToPlay, { id: oppId } );
 		}
 		
@@ -177,7 +204,7 @@
 			}
 			var oppId: uint = receivedChallengeList.selectedItem.label;
 			
-			connection.send(GameEvent.AcceptInvite, {id: oppId} );
+			connection.send(GameEvent.AcceptInvite, {id: oppId, response: 0} );
 		}
 		
 		private function getErrorDescription(errorCode: uint): String {
@@ -191,7 +218,7 @@
 				case 6: return "UnknownMethod";
 				case 7: return "OutOfMemory";
 				case 8: return "PlayerAlreadyAuthorized"; 
-				
+				case 9: return "PlayerAlreadyChallenged";
 				default: return "Unknown error";
 			}
 		}

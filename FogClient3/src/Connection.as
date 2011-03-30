@@ -129,7 +129,10 @@ package
 
 			trace("sent " + (buffer.position + 4) + " bytes");
 			socket.writeUnsignedInt(buffer.position + 4);
-			socket.writeBytes(buffer);
+			
+			
+			socket.writeBytes(buffer, 0, buffer.position); 
+			
 			socket.flush();
 		}
 

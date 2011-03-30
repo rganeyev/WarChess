@@ -11,5 +11,6 @@ enum GameEvent
 	AcceptInvite = 5, 
 	Move = 6,
 	GameState = 7,
-	GameEvent_MAX = 8,
+	GameStart = 8,
+	GameEvent_MAX = 9,
 };
