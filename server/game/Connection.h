@@ -26,6 +26,9 @@ public:
 	bool do_inviteToPlay(unsigned int messageLength);
 	bool do_acceptInvite(unsigned int messageLength);
 	
+	Result informPlayersWithOnlinePlayer(unsigned int id );
+	Result informPlayersWithOfflinePlayer(unsigned int id );
+
 	Result createNewPlayer(unsigned int id, Player** pPlayer);
 	//TODO: have this methods implemented
 	/*

@@ -16,10 +16,11 @@ Player::Player(DWORD fileOffset) {
 	overlapped.Offset = fileOffset;
 }
 
-//standart Player initialization
+//default Player initialization
 Player::Player(unsigned int id, String password) {
 	init();
 	this->id = id;
+	this->experience = 100;
 	this->gold = 100;
 	assert(password.length() == PasswordLength);
 	memcpy(this->password, password.ptr(), PasswordLength);
@@ -134,18 +135,38 @@ void Player::writeExperience( AMFObjectWriter* playerWriter )  {
 	playerWriter->writeNumber(String("exp", 3), experience);
 }
 
-void Player::addSentChallenge( unsigned int oppId )
+bool Player::addSentChallenge( unsigned int oppId )
 {
 	lock();
-	sentChallenges.insert(oppId);
+		sentChallenges.insert(oppId);
 	unlock();
+
+	char tmp[200];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
+	objectWriter.begin();
+		objectWriter.writeNumber(String("id", 2), oppId);
+	objectWriter.end();
+
+	return connection->sendRespond(InviteToPlay, &streamWriter);
+
+
 }
 
-void Player::addReceivedChallenge( unsigned int oppId )
+bool Player::addReceivedChallenge( unsigned int oppId )
 {
 	lock();
 		receivedChallenges.insert(oppId);
 	unlock();
+
+	char tmp[200];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
+	objectWriter.begin();
+		objectWriter.writeNumber(String("id", 2), oppId);
+	objectWriter.end();
+
+	return connection->sendRespond(ReceiveInvite, &streamWriter);
 }
 
 void Player::removeReceivedChallenge( unsigned int oppId )

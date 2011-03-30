@@ -50,6 +50,7 @@ Connection::~Connection() {
 
 		player->clearSentChallenges();
 
+		informPlayersWithOfflinePlayer(player->id);
 		//TODO: remove player connection
 	}
 }
@@ -148,8 +149,11 @@ bool Connection::do_auth( unsigned int messageLength ) {
 	{
 		this->player = player;
 		player->connection = this;
+
 		//add player to online
 		playerManager->addPlayerToOnline(player->id);
+		informPlayersWithOnlinePlayer(player->id);
+
 
 		char tmp[4];
 		AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
@@ -309,27 +313,12 @@ bool Connection::do_inviteToPlay( unsigned int messageLength )
 	}
 	if (player->sentChallenges.find(oppId) != player->sentChallenges.end()) {
 		return sendError(InviteToPlay, PlayerAlreadyChallenged);
-	} 
-	player->addSentChallenge(oppId);
-	
-	char tmp[200];
-	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
-	objectWriter.begin();
-		objectWriter.writeNumber(String("id", 2), oppId);
-	objectWriter.end();
+	}
 
-	char tmp2[200];
-	opponent->addReceivedChallenge(player->id);
-	AMFWriter streamWriterForInvite = AMFWriter(tmp2, sizeof(tmp2));
-	objectWriter = AMFObjectWriter(&streamWriterForInvite);
-	objectWriter.begin();
-		objectWriter.writeNumber(String("id", 2), player->id);
-	objectWriter.end();
-
-	return sendRespond(InviteToPlay, &streamWriter) && (opponent->connection->sendRespond(ReceiveInvite, & streamWriterForInvite));
+	return (player->addSentChallenge(oppId)) && (opponent->addReceivedChallenge(player->id)); 
 }
 
+//TODO: implement this method
 bool Connection::do_acceptInvite( unsigned int messageLength )
 {
 	//receive id & response
@@ -359,5 +348,41 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 	}
 
 	//return sendError(AcceptInvite, )
+}
+
+Result informPlayers(GameEvent event, unsigned int id) {
+	bool result = true;
+	char tmp[200];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
+	objectWriter.begin();
+	objectWriter.writeNumber(String("id", 2), id);
+	objectWriter.end();
+
+	PlayerManager* playerManager = PlayerManager::instance();
+	std::set<unsigned int> online = playerManager->getOnlinePlayers();
+
+	for (std::set<unsigned int>::iterator it = online.begin(); it != online.end(); ++it) {
+		if (*it == id) {
+			continue;
+		}
+		result &= (playerManager->getPlayer(*it)->connection->sendRespond(event, &streamWriter));
+	}
+	if (result) {
+		return Success;
+	} else {
+		return UnknownProblem;
+	}
+}
+
+//informs other players with new online players
+Result Connection::informPlayersWithOnlinePlayer(unsigned int id )
+{
+	return informPlayers(AddOnlinePlayer, id);
+}
+
+Result Connection::informPlayersWithOfflinePlayer( unsigned int id )
+{
+	return informPlayers(RemoveOnlinePlayer, id);
 }
 

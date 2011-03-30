@@ -93,11 +93,28 @@
 			connection.addGameEventListener(GameEvent.GetOnlinePlayers, onGotOnlineList);
 			connection.addGameEventListener(GameEvent.InviteToPlay, onReceivedAnswerOnInvitation);
 			connection.addGameEventListener(GameEvent.GotInvitation, onGotInvitation);
+			connection.addGameEventListener(GameEvent.AddOnlinePlayer, addPlayerToOnlineList);
+			connection.addGameEventListener(GameEvent.RemoveOnlinePlayer, removePlayerFromOnlineList);
 			
 			connection.onConnected = onConnected;
 			connection.connect();
 			
 			//onConnected -> onRegisterComplete -> onAuthComplete
+		}
+		
+		private function removePlayerFromOnlineList(result: uint, response: Object): void {
+			checkResult(result);
+			for (var i: uint = 0; i < onlineList.length; i++) {
+				if (onlineList.getItemAt(i).data == response.id) {
+					onlineList.removeItemAt(i);
+					break;
+				}
+			}
+		}
+		
+		private function addPlayerToOnlineList (result: uint, response: Object): void {
+			getErrorDescription(result);
+			onlineList.addItem( { label: response.id, data: response.id } );
 		}
 		
 		private function addLabel(label: Label, x: int, y: int, width: int, height: int, text: String): void {
@@ -140,7 +157,6 @@
 			checkResult(result);
 			getOnlinePlayers();
 		}
-		
 		//response = Array of objects, containing id.
 		private function onGotOnlineList(result:uint, response: Object): void {
 			checkResult(result);

@@ -12,4 +12,5 @@ enum Result
 	OutOfMemory = 7,
 	PlayerAlreadyAuthorized = 8,
 	PlayerAlreadyChallenged = 9,
+	UnknownProblem = 10,
 };

@@ -12,5 +12,8 @@ enum GameEvent
 	Move = 6,
 	GameState = 7,
 	GameStart = 8,
-	GameEvent_MAX = 9,
+	GameEnd   = 9,
+	AddOnlinePlayer = 10,
+	RemoveOnlinePlayer = 11,
+	GameEvent_MAX = 12,
 };

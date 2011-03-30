@@ -43,8 +43,8 @@ public:
 
 	void initialize();
 	void commit();
-	void addSentChallenge(unsigned int oppId);
-	void addReceivedChallenge(unsigned int oppId);
+	bool addSentChallenge(unsigned int oppId);
+	bool addReceivedChallenge(unsigned int oppId);
 	void removeReceivedChallenge(unsigned int oppId);
 	void clearSentChallenges();
 
