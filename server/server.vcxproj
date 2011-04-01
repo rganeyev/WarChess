@@ -98,10 +98,12 @@
     <ClCompile Include="amf\AMFReader.cpp" />
     <ClCompile Include="amf\AMFWriter.cpp" />
     <ClCompile Include="game\BaseConnection.cpp" />
+    <ClCompile Include="game\Board.cpp" />
     <ClCompile Include="game\Connection.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="game\PlayerManager.cpp" />
     <ClCompile Include="game\Settings.cpp" />
+    <ClCompile Include="game\WaveFigure.cpp" />
     <ClCompile Include="pugixml\pugixml.cpp" />
     <ClCompile Include="pugixml\pugixpath.cpp" />
     <ClCompile Include="util\AsyncIOSystem.cpp" />
@@ -119,12 +121,14 @@
     <ClInclude Include="amf\AMFReader.h" />
     <ClInclude Include="amf\AMFWriter.h" />
     <ClInclude Include="game\BaseConnection.h" />
+    <ClInclude Include="game\Board.h" />
     <ClInclude Include="game\Connection.h" />
     <ClInclude Include="game\GameEvent.h" />
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="game\PlayerManager.h" />
     <ClInclude Include="game\Result.h" />
     <ClInclude Include="game\Settings.h" />
+    <ClInclude Include="game\WaveFigure.h" />
     <ClInclude Include="pugixml\pugiconfig.hpp" />
     <ClInclude Include="pugixml\pugixml.hpp" />
     <ClInclude Include="util\Array.h" />

@@ -10,7 +10,7 @@ enum GameEvent
 	ReceiveInvite = 4,
 	AcceptInvite = 5, 
 	Move = 6,
-	GameState = 7,
+	InformMove = 7,
 	GameStart = 8,
 	GameEnd   = 9,
 	AddOnlinePlayer = 10,

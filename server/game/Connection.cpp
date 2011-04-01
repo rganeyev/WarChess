@@ -34,6 +34,7 @@ Connection::Connection( SOCKET sock ) : BaseConnection(sock, 32*1024) {
 	methods[Auth] = &Connection::do_auth;
 	methods[GetOnlinePlayers] = &Connection::do_getOnlinePlayers;
 	methods[InviteToPlay] = &Connection::do_inviteToPlay;
+	methods[AcceptInvite] = &Connection::do_acceptInvite;
 }
 
 Connection::~Connection() {
@@ -335,28 +336,55 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 	}
 	request.end();
 
-	char tmp[200];
-	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-	AMFObjectWriter objectWriter(&streamWriter);
+	
 
 	//if accepted game
 	if (response == 0) {
-		objectWriter.begin();
-			//TODO: add moves here
-		objectWriter.end();
-		return sendRespond(GameStart, &streamWriter);
+		return do_startGame(PlayerManager::instance()->getPlayer(id));
 	}
-
 	//return sendError(AcceptInvite, )
 }
 
-Result informPlayers(GameEvent event, unsigned int id) {
+bool Connection::do_startGame(Player* opponent)
+{
+	char tmp[2000];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFArrayWriter whiteWriter = AMFArrayWriter(&streamWriter);
+	AMFArrayWriter blackWriter = AMFArrayWriter(&streamWriter);
+	char pawn[5] ="Pa2\0";
+	blackWriter.begin(8);
+	whiteWriter.begin(8);
+		for (unsigned int i = 0; i < 8; ++i) {	
+			pawn[1] = (char)('a' + i);
+			pawn[2] = '2';
+			printf("%s", pawn);
+			AMFObjectWriter whiteFigure = whiteWriter.addObject(toString(i));
+			whiteFigure.begin();
+				whiteFigure.writeUTF(String("fig", 3), String(pawn, 4));
+			whiteFigure.end();
+
+			pawn[2] = '7';
+			AMFObjectWriter blackFigure = blackWriter.addObject(toString(i));
+			blackFigure.begin();
+				blackFigure.writeUTF(String("fig", 3), String(pawn, 4));
+			blackFigure.end();
+		}
+	whiteWriter.end();
+	blackWriter.end();
+	bool result = sendRespond(GameStart, &streamWriter);
+	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
+}
+
+
+
+
+Result Connection::informPlayers(GameEvent event, unsigned int id) {
 	bool result = true;
 	char tmp[200];
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
 	objectWriter.begin();
-	objectWriter.writeNumber(String("id", 2), id);
+		objectWriter.writeNumber(String("id", 2), id);
 	objectWriter.end();
 
 	PlayerManager* playerManager = PlayerManager::instance();
@@ -386,3 +414,33 @@ Result Connection::informPlayersWithOfflinePlayer( unsigned int id )
 	return informPlayers(RemoveOnlinePlayer, id);
 }
 
+bool Connection::do_move( unsigned int messageLength )
+{
+	AMFReader request = AMFReader(buffer, messageLength);
+	String from;
+	String to;
+	char moves[3];
+	while (!request.empty()) {
+		String argName = request.readArgName();
+		if (argName == String("from", 4)) {
+			from = request.readUTF(moves, sizeof(moves));
+		} else if (argName == String("to", 2)) {
+			to = request.readUTF(moves, sizeof(moves));
+		}
+	}
+	request.end();
+	//TODO: authenticate move
+	return do_informMove(from, to);
+}
+
+bool Connection::do_informMove( String from, String to )
+{
+	char tmp[200];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	AMFObjectWriter moveWriter = AMFObjectWriter(&streamWriter);
+	moveWriter.begin();
+		moveWriter.writeUTF(String("from", 4), from);
+		moveWriter.writeUTF(String("to", 2), to);
+	moveWriter.end();	
+	return sendRespond(InformMove, &streamWriter);
+}

@@ -13,6 +13,8 @@
 	import flash.net.ObjectEncoding;
 	import flash.ui.Mouse;
 	import fl.events.ComponentEvent;
+	import Game.Board;
+	import Connection;
 	
 	/**
 	 * ...
@@ -22,7 +24,7 @@
 	public class Main extends Sprite 
 	{
 		
-		//public var board : Board;
+		public var board : Board;
 		public var connection: Connection;
 		
 		private var myId: uint = 3371777;
@@ -40,6 +42,8 @@
 		private var receivedChallengeLabel: Label;
 		private var textInput: TextInput;
 		
+		private var menuDisplayObjects: Array;
+		
 		
 		
 		public function Main(): void {
@@ -49,7 +53,7 @@
 
 		private function init(e: Event = null): void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			
+			menuDisplayObjects = new Array();
 			// entry point
 			textInput = new TextInput();
 			textInput.addEventListener(ComponentEvent.ENTER, start);
@@ -60,6 +64,7 @@
 		private function start(e: ComponentEvent): void {
 			myId = uint(textInput.text);
 			removeChild(textInput);
+			menuDisplayObjects = new Array();
 			//adding onlineList && label
 			onlineList = new List();
 			addList(onlineList, 0, 30, 100, 200);
@@ -95,6 +100,8 @@
 			connection.addGameEventListener(GameEvent.GotInvitation, onGotInvitation);
 			connection.addGameEventListener(GameEvent.AddOnlinePlayer, addPlayerToOnlineList);
 			connection.addGameEventListener(GameEvent.RemoveOnlinePlayer, removePlayerFromOnlineList);
+			connection.addGameEventListener(GameEvent.GameStart, startGame);
+			connection.addGameEventListener(GameEvent.InformMove, onInformedMove);
 			
 			connection.onConnected = onConnected;
 			connection.connect();
@@ -140,6 +147,7 @@
 			component.setSize(width, height);
 			component.x = x;
 			component.y = y;
+			menuDisplayObjects.push(component);
 			addChild(component);
 		}
 		
@@ -157,6 +165,7 @@
 			checkResult(result);
 			getOnlinePlayers();
 		}
+		
 		//response = Array of objects, containing id.
 		private function onGotOnlineList(result:uint, response: Object): void {
 			checkResult(result);
@@ -221,6 +230,25 @@
 			var oppId: uint = receivedChallengeList.selectedItem.label;
 			
 			connection.send(GameEvent.AcceptInvite, {id: oppId, response: 0} );
+		}
+		
+		private function startGame(result: uint, response: Object): void {
+			//TODO: implement start game
+			for (var i: uint = 0; i < menuDisplayObjects.length; i++) {
+				removeChild(menuDisplayObjects[i]);
+			}
+			var whiteFigures: Array = response.white;
+			var blackFigures: Array = response.black;
+			var fogCells: Array = response.fog;
+			var whiteTurn: Boolean = response.whiteTurn;
+			//board = new Board(whiteTurn, whiteFigures, blackFigures, fogCells);
+			//addChild(board);
+		}
+		
+		private function onInformedMove(result: uint, response: Object): void {
+			var from: String = response.from;
+			var to: String = response.to;
+			board.getMove(from, to);
 		}
 		
 		private function getErrorDescription(errorCode: uint): String {

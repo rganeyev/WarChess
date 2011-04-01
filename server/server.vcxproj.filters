@@ -64,6 +64,12 @@
     <ClCompile Include="CrossDomainPolicyResolver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="game\Board.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\WaveFigure.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amf\AMFArrayWriter.h">
@@ -147,5 +153,11 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="CrossDomainPolicyResolver.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="game\Board.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\WaveFigure.h">
+      <Filter>game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
