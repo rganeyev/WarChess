@@ -1,7 +1,6 @@
 ﻿package Game
 {
 	import flash.display.Sprite;
-	import flash.net.FileFilter;
 	import flash.system.ApplicationDomain;
 	import Game.Figure;
 	import Game.Cell;
@@ -20,22 +19,6 @@
 	
 		private var whiteTurn: Boolean = Figure.WHITE;
 		private var field: Field;
-		
-		/*public static var field: Cell;
-		public var PawnW: PawnWhite;
-		public var PawnB: PawnBlack;
-		public var RookW: RookWhite;
-		public var RookB: RookBlack;
-		public var KnightW: KnightWhite;
-		public var KnightB: KnightBlack;
-		public var BishopW: BishopWhite;
-		public var BishopB: BishopBlack;
-		public var QueenW: 	QueenWhite;
-		public var QueenB: QueenBlack;
-		public var KingW: KingWhite;
-		public var KingB: KingBlack;
-		*/
-
 		
 		private var fogCells:Array = new Array();
 		private var whites:  Array = new Array("Pa2","Pb2","Pc2","Pd2", "Pe2","Pf2","Pg2","Ph2","Ra1","Rh1","Nb1","Ng1","Bc1","Bf1","Qd1","Ke1");
@@ -66,7 +49,8 @@
 		}
 		
 		//gets move from server
-		public function getMove(from: String, to: String): void {
+		public function getMove(whiteTurn: Boolean, from: String, to: String): void {
+			this.whiteTurn = whiteTurn;
 			var toCell: Cell = getCellByString(to);
 			var fromCell: Cell = getCellByString(from);
 			toCell.setFigure(fromCell.getFigure());

@@ -2,6 +2,7 @@
 #include "game/PlayerManager.h"
 #include "game/Player.h"
 #include "game/Settings.h"
+#include "game/Board.h"
 
 #include "amf/AMFReader.h"
 #include "amf/AMFWriter.h"
@@ -349,7 +350,8 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 
 bool Connection::do_startGame(Player* opponent)
 {
-	char tmp[2000];
+	Board board(player, opponent);
+	/*char tmp[2000];
 	char figureName[5] ="Pa2\0";
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	
@@ -388,6 +390,7 @@ bool Connection::do_startGame(Player* opponent)
 	
 	bool result = sendRespond(GameStart, &streamWriter);
 	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
+	*/
 }
 
 
@@ -446,6 +449,7 @@ bool Connection::do_move( unsigned int messageLength )
 	}
 	request.end();
 	//TODO: authenticate move
+	//TODO: send to another client
 	return do_informMove(from, to);
 }
 
@@ -455,7 +459,7 @@ bool Connection::do_informMove( String from, String to )
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFObjectWriter moveWriter = AMFObjectWriter(&streamWriter);
 	moveWriter.begin();
-		moveWriter.writeBoolean("whiteMove", true);
+		moveWriter.writeBoolean(String("whiteMove", 9), true);
 		moveWriter.writeUTF(String("from", 4), from);
 		moveWriter.writeUTF(String("to", 2), to);
 	moveWriter.end();	

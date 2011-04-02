@@ -18,48 +18,54 @@
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:AMFReader.cpp" caret="1457" fromTop="17" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:PlayerManager.cpp" caret="3479" fromTop="17" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:GameEvent.h" caret="203" fromTop="11" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Result.h" caret="149" fromTop="7" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:pugixml.hpp" caret="7549" fromTop="14" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.h" caret="310" fromTop="0" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.cpp" caret="18" fromTop="0" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.cpp" caret="860" fromTop="22" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:WaveFigure.h" caret="102" fromTop="6" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="682" fromTop="13" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Console.cpp" caret="245" fromTop="14" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.cpp" caret="38" fromTop="2" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="184" fromTop="13" />
       <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.h" caret="353" fromTop="18" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10163" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:AMFObjectWriter.h" caret="471" fromTop="17" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:AMFObjectWriter.cpp" caret="52" fromTop="0" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Result.h" caret="251" fromTop="12" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Player.cpp" caret="449" fromTop="20" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="388" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.cpp" caret="270" fromTop="16" />
+      <File id="d:Miscellaneous Files/f:Figure.h/l:E!?Work?WarChess?server?game?Figure.h" caret="121" fromTop="7" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9405" fromTop="249" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:CircularBuffer.h" caret="591" fromTop="33" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="526" fromTop="24" />
     </RecentFiles>
     <RecentEdits>
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.cpp" caret="860" fromTop="40" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.cpp" caret="136" fromTop="0" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.cpp" caret="860" fromTop="22" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.h" caret="68" fromTop="5" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.h" caret="335" fromTop="19" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.h" caret="290" fromTop="14" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:String.h" caret="190" fromTop="8" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9194" fromTop="17" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="954" fromTop="14" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:WaveFigure.h" caret="102" fromTop="6" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="11318" fromTop="5" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.h" caret="720" fromTop="13" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="11757" fromTop="14" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="11478" fromTop="10" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10515" fromTop="8" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="12207" fromTop="12" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="11819" fromTop="0" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="311" fromTop="18" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="184" fromTop="13" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.cpp" caret="133" fromTop="9" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Console.cpp" caret="114" fromTop="3" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9507" fromTop="7" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9836" fromTop="19" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9837" fromTop="19" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10038" fromTop="25" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10111" fromTop="10" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9311" fromTop="3" />
-      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10185" fromTop="13" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10647" fromTop="13" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10063" fromTop="15" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10573" fromTop="19" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10573" fromTop="22" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10570" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10570" fromTop="26" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10035" fromTop="10" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9605" fromTop="12" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10570" fromTop="11" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10497" fromTop="14" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10023" fromTop="0" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="988" fromTop="23" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Result.h" caret="316" fromTop="14" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9315" fromTop="12" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="12745" fromTop="19" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="11958" fromTop="7" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="12224" fromTop="13" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="220" fromTop="13" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="12621" fromTop="13" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="12314" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="16" fromTop="1" />
+      <File id="d:Miscellaneous Files/f:Figure.h/l:E!?Work?WarChess?server?game?Figure.h" caret="43" fromTop="3" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="10713" fromTop="47" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="104" fromTop="4" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="187" fromTop="9" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.cpp" caret="275" fromTop="17" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.h" caret="388" fromTop="18" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Board.cpp" caret="270" fromTop="16" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="134" fromTop="3" />
+      <File id="FD385D0D-5252-47B8-A49C-D802D5751D47/f:Connection.cpp" caret="9398" fromTop="26" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

@@ -54,6 +54,9 @@
 		}
 		
 		public function resetFigure(): void {
+			if (figure == null) {
+				return;
+			}
 			figure.x = x + size / 2;
 			figure.y = y + size / 2;
 		}

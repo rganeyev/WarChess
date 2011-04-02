@@ -239,7 +239,6 @@
 		
 		private function startGame(result: uint, response: Object): void {
 			checkResult(result);
-			//TODO: implement start game
 			for (var i: uint = 0; i < menuDisplayObjects.length; i++) {
 				if (menuDisplayObjects[i].stage) { 
 					removeChild(menuDisplayObjects[i]);
@@ -255,9 +254,7 @@
 		
 		private function onInformedMove(result: uint, response: Object): void {
 			checkResult(result);
-			var from: String = response.from;
-			var to: String = response.to;
-			board.getMove(from, to);
+			board.getMove(response.whiteTurn, response.from, response.to);
 		}
 		
 		private function getErrorDescription(errorCode: uint): String {
