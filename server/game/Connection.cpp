@@ -348,48 +348,42 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 bool Connection::do_startGame(Player* opponent)
 {
 	char tmp[2000];
-	char figure[5] ="Pa2\0";
+	char figureName[5] ="Pa2\0";
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	
-	//init white figures
-	AMFObjectWriter white = AMFObjectWriter(&streamWriter);
-	white.begin();
-		white.writeArray(String("white", 5));
+	
+	AMFObjectWriter figures = AMFObjectWriter(&streamWriter);
+	figures.begin();
+		
+		//init white figures
+		figures.writeArray(String("white", 5));
 		AMFArrayWriter whiteWriter = AMFArrayWriter(&streamWriter);
 		whiteWriter.begin(8);
-			figure[2] = '2';
+			figureName[2] = '2';
 			for (unsigned int i = 0; i < 8; ++i) {	
-				figure[1] = (char)('a' + i);
+				figureName[1] = (char)('a' + i);
 				AMFObjectWriter whiteFigure = whiteWriter.addObject(toString(i));
 				whiteFigure.begin();
-					whiteFigure.writeUTF(String("fig", 3), String(figure, 3));
+					whiteFigure.writeUTF(String("fig", 3), String(figureName, 3));
 				whiteFigure.end();
 			}
 		whiteWriter.end();
-	white.end();
 
-	//init black figures
-	AMFObjectWriter black = AMFObjectWriter(&streamWriter);
-	black.begin();
-		black.writeArray(String("black", 5));
+		//init black figures
+		figures.writeArray(String("black", 5));
 		AMFArrayWriter blackWriter = AMFArrayWriter(&streamWriter);
 		blackWriter.begin(8);
-			figure[2] = '7';
-			for (unsigned int i = 0; i < 8; ++i) {
-				figure[1] = (char)('a' + i);
-				AMFObjectWriter blackFigure = blackWriter.addObject(toString(i));
-				blackFigure.begin();
-					blackFigure.writeUTF(String("fig", 3), String(figure, 3));
-				blackFigure.end();
-			}
+		figureName[2] = '7';
+		for (unsigned int i = 0; i < 8; ++i) {
+			figureName[1] = (char)('a' + i);
+			AMFObjectWriter blackFigure = blackWriter.addObject(toString(i));
+			blackFigure.begin();
+			blackFigure.writeUTF(String("fig", 3), String(figureName, 3));
+			blackFigure.end();
+		}
 		blackWriter.end();
-	black.end();
+	figures.end();
 	
-	/*
-	AMFArrayWriter fogWriter = AMFArrayWriter(&streamWriter);
-	fogWriter.begin(0);
-	fogWriter.end();
-	*/
 	bool result = sendRespond(GameStart, &streamWriter);
 	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
 }

@@ -235,7 +235,9 @@
 		private function startGame(result: uint, response: Object): void {
 			//TODO: implement start game
 			for (var i: uint = 0; i < menuDisplayObjects.length; i++) {
-				removeChild(menuDisplayObjects[i]);
+				if (menuDisplayObjects[i].stage) { 
+					removeChild(menuDisplayObjects[i]);
+				}
 			}
 			
 			var whiteFigures: Array = response.white;
