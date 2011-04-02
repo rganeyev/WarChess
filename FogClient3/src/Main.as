@@ -61,6 +61,11 @@
 			
 		}
 		
+		public function move(from: String, to: String): void {
+			trace(from + " " + to);
+			connection.send(GameEvent.Move, { from: from, to: to } );
+		}
+		
 		private function start(e: ComponentEvent): void {
 			myId = uint(textInput.text);
 			removeChild(textInput);
@@ -233,6 +238,7 @@
 		}
 		
 		private function startGame(result: uint, response: Object): void {
+			checkResult(result);
 			//TODO: implement start game
 			for (var i: uint = 0; i < menuDisplayObjects.length; i++) {
 				if (menuDisplayObjects[i].stage) { 
@@ -243,12 +249,12 @@
 			var whiteFigures: Array = response.white;
 			var blackFigures: Array = response.black;
 			var fogCells: Array = response.fog;
-			var whiteTurn: Boolean = response.whiteTurn;
-			//board = new Board(whiteTurn, whiteFigures, blackFigures, fogCells);
-			//addChild(board);
+			board = new Board(whiteFigures, blackFigures, fogCells);
+			addChild(board);
 		}
 		
 		private function onInformedMove(result: uint, response: Object): void {
+			checkResult(result);
 			var from: String = response.from;
 			var to: String = response.to;
 			board.getMove(from, to);
@@ -266,9 +272,11 @@
 				case 7: return "OutOfMemory";
 				case 8: return "PlayerAlreadyAuthorized"; 
 				case 9: return "PlayerAlreadyChallenged";
+				case 10: return "RefuseGame"
 				default: return "Unknown error";
 			}
 		}
+	
 		
 		private function checkResult(result: uint): void {
 			if (result != 0) {

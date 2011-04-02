@@ -3,6 +3,7 @@
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
+	import Game.Figure;
 	
 	/**
 	 * ...
@@ -22,7 +23,6 @@
 		public function Cell(x: int = 0, y: int = 0, name: String = "a1", isWhite: Boolean = false): void {
 			stop();
 			addEventListener(MouseEvent.MOUSE_DOWN, onDown);
-			this();
 			this.name = name;
 			setPosition(x, y);
 			setColor(isWhite);
@@ -51,7 +51,6 @@
 		public function setPosition(x: int, y: int): void {
 			this.x = x;
 			this.y = y;
-			resetFigure();
 		}
 		
 		public function resetFigure(): void {

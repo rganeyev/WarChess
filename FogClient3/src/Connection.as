@@ -40,7 +40,7 @@ package
 		 */
 		private function onDataReceived(e:ProgressEvent): void {
 			var bytesAvailable: uint = socket.bytesAvailable;
-			trace("received " + bytesAvailable + " bytes");
+			//trace("received " + bytesAvailable + " bytes");
 			while (true) {
 				if (!sizeRead) {
 					if (bytesAvailable < 4) {
@@ -127,7 +127,7 @@ package
 			buffer.writeUnsignedInt(code);
 			buffer.writeObject(obj);
 
-			trace("sent " + (buffer.position + 4) + " bytes");
+			//trace("sent " + (buffer.position + 4) + " bytes");
 			socket.writeUnsignedInt(buffer.position + 4);
 			
 			

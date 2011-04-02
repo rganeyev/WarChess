@@ -1,6 +1,7 @@
 ﻿package Game
 {
 	import flash.display.Sprite;
+	import flash.net.FileFilter;
 	import flash.system.ApplicationDomain;
 	import Game.Figure;
 	import Game.Cell;
@@ -17,7 +18,8 @@
 		
 		private static var cells: Array = new Array(8);
 	
-		private var whiteTurn : uint = Figure.WHITE;
+		private var whiteTurn: Boolean = Figure.WHITE;
+		private var field: Field;
 		
 		/*public static var field: Cell;
 		public var PawnW: PawnWhite;
@@ -33,7 +35,6 @@
 		public var KingW: KingWhite;
 		public var KingB: KingBlack;
 		*/
-		private var connection: Connection;
 
 		
 		private var fogCells:Array = new Array();
@@ -41,9 +42,8 @@
 		private var blacks:  Array = new Array("Pa7", "Pb7", "Pc7","Pd7","Pe7","Pf7","Pg7","Ph7","Ra8","Rh8","Nb8","Ng8","Bc8","Bf8","Qd8","Ke8");
 		
 		//constructor
-		public function Board(whiteTurn: Boolean, whiteFigures: Array, blackFigures: Array, fog: Array): void {		
-			this.connection = connection;
-			
+		public function Board(whiteFigures: Array, blackFigures: Array, fog: Array): void {		
+			whiteTurn = Figure.WHITE;
 			fogCells = fog;
 			whites = whiteFigures;
 			blacks = blackFigures;
@@ -61,8 +61,8 @@
 		
 		//sends move to server to validation
 		public function sendMove(from: Cell, to: Cell): void {
-			trace(from + " " + to);
-			connection.send(GameEvent.Move, { from: from.toString(), to: to.toString() } );
+			Main(parent).move(from.toString(), to.toString());
+			
 		}
 		
 		//gets move from server
@@ -75,6 +75,9 @@
 		}
 		
 		public function initFog(): void {
+			if (fogCells == null) {
+				return;
+			}
 			for (var tmp: String in fogCells) {
 				getCellByString(tmp).setFog(true);
 			}
@@ -86,15 +89,19 @@
 			var hPos: int = -Cell.size;
 			for (var y: int = 7; y >= 0; y--) {
 				hPos += Cell.size;
-				var tmpArray: Array = new Array(8);
+				var tmpArray: Array = new Array();
 				var wPos: int = 0;
 				for (var x: int = 0; x < 8; x++) {
-					//maybe cell?
-					tmpArray[x] = new Cell(wPos, hPos, horizName[x] + vertName[y], (x % 2) !=  (y % 2));
+					field = new Field();
+					field.setPosition(wPos, hPos);
+					field.name = horizName[x] + vertName[y];
+					field.setColor((x % 2) !=  (y % 2));
+					tmpArray.push(field);
 					addChild(tmpArray[x]);
 					
 					wPos += Cell.size;
 				}
+				
 				cells[y] = tmpArray;
 			}
 		}
@@ -105,7 +112,7 @@
 		private function initFigures(colorPiece: Array, isWhite: Boolean): void {
 			for (var k: uint = 0 ; k < colorPiece.length; ++k) {
 				var figure: Figure;
-				switch(colorPiece[k].charAt(0)) {
+				switch(colorPiece[k].fig.charAt(0)) {
 					case "R":
 						if (isWhite) figure = new RookWhite(); 
 						else		 figure = new RookBlack();
@@ -143,7 +150,7 @@
 				} else {
 					figure.setFigureColor(Figure.BLACK);
 				}
-				var cell: Cell = getCellByString(colorPiece[k].substr(1, 2));
+				var cell: Cell = getCellByString(colorPiece[k].fig.substr(1, 2));
 				figure.cell = cell;
 				cell.setFigure(figure);
 				addChild(figure);
@@ -160,7 +167,7 @@
 			return cells[y][x];
 		}
 		
-		public function getTurn(): uint {
+		public function getTurn(): Boolean {
 			return whiteTurn;
 		}	
 	}

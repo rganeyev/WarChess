@@ -3,6 +3,7 @@
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import Game.Board;
 	
 	/**
 	 * ...
@@ -12,10 +13,10 @@
 	
 	public class Figure extends Sprite 
 	{
-		public static const WHITE : int = 0;
-		public static const BLACK : int = 1;
+		public static const WHITE : Boolean = true;
+		public static const BLACK : Boolean = false;
 		public var cell: Cell;
-		private var figureColor: int; 
+		private var figureColor: Boolean; 
 		
 		public function Figure() {
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -58,12 +59,12 @@
 		
 		
 		/// returns figure color
-		public function getFigureColor() : int {
+		public function getFigureColor() : Boolean {
 			return figureColor;
 		}
 		
 		/// sets figure color
-		public function setFigureColor(color : int) : void {
+		public function setFigureColor(color : Boolean) : void {
 			this.figureColor = color;
 		}
 		

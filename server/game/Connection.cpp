@@ -35,6 +35,8 @@ Connection::Connection( SOCKET sock ) : BaseConnection(sock, 32*1024) {
 	methods[GetOnlinePlayers] = &Connection::do_getOnlinePlayers;
 	methods[InviteToPlay] = &Connection::do_inviteToPlay;
 	methods[AcceptInvite] = &Connection::do_acceptInvite;
+	methods[Move] = &Connection::do_move;
+	
 }
 
 Connection::~Connection() {
@@ -342,7 +344,7 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 	if (response == 0) {
 		return do_startGame(PlayerManager::instance()->getPlayer(id));
 	}
-	//return sendError(AcceptInvite, )
+	return sendError(AcceptInvite, RefuseGame);
 }
 
 bool Connection::do_startGame(Player* opponent)
@@ -432,13 +434,14 @@ bool Connection::do_move( unsigned int messageLength )
 	AMFReader request = AMFReader(buffer, messageLength);
 	String from;
 	String to;
-	char moves[3];
+	char fromMove[3];
+	char toMove[3];
 	while (!request.empty()) {
 		String argName = request.readArgName();
 		if (argName == String("from", 4)) {
-			from = request.readUTF(moves, sizeof(moves));
+			from = request.readUTF(fromMove, sizeof(fromMove));
 		} else if (argName == String("to", 2)) {
-			to = request.readUTF(moves, sizeof(moves));
+			to = request.readUTF(toMove, sizeof(toMove));
 		}
 	}
 	request.end();
@@ -452,6 +455,7 @@ bool Connection::do_informMove( String from, String to )
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	AMFObjectWriter moveWriter = AMFObjectWriter(&streamWriter);
 	moveWriter.begin();
+		moveWriter.writeBoolean("whiteMove", true);
 		moveWriter.writeUTF(String("from", 4), from);
 		moveWriter.writeUTF(String("to", 2), to);
 	moveWriter.end();	
