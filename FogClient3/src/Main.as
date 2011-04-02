@@ -237,6 +237,7 @@
 			for (var i: uint = 0; i < menuDisplayObjects.length; i++) {
 				removeChild(menuDisplayObjects[i]);
 			}
+			
 			var whiteFigures: Array = response.white;
 			var blackFigures: Array = response.black;
 			var fogCells: Array = response.fog;
