@@ -14,6 +14,7 @@ public:
 	AMFObjectWriter addObject(String index);
 	void addUnsignedInt(String index, unsigned int value);
 	void addBoolean(String index, bool value);
+	void addString(String index, String value);
 	void end();
 
 private:

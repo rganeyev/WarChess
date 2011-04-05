@@ -100,6 +100,8 @@
     <ClCompile Include="game\BaseConnection.cpp" />
     <ClCompile Include="game\Board.cpp" />
     <ClCompile Include="game\Connection.cpp" />
+    <ClCompile Include="game\Figure.cpp" />
+    <ClCompile Include="game\Pawn.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="game\PlayerManager.cpp" />
     <ClCompile Include="game\Settings.cpp" />
@@ -123,7 +125,9 @@
     <ClInclude Include="game\BaseConnection.h" />
     <ClInclude Include="game\Board.h" />
     <ClInclude Include="game\Connection.h" />
+    <ClInclude Include="game\Figure.h" />
     <ClInclude Include="game\GameEvent.h" />
+    <ClInclude Include="game\Pawn.h" />
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="game\PlayerManager.h" />
     <ClInclude Include="game\Result.h" />

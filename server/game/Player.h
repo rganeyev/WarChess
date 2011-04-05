@@ -5,6 +5,7 @@
 #include "amf/AMFObjectWriter.h"
 #include <boost/thread/shared_mutex.hpp>
 #include "game/Connection.h"
+#include "game/Board.h"
 #include <set>
 
 #include <stdio.h>
@@ -15,6 +16,7 @@ extern volatile LONG lastOffset;
 class String;
 class AMFObjectWriter;
 class Connection;
+class Board;
 
 enum {
 	PasswordLength = 8,
@@ -30,6 +32,7 @@ struct PlayerData {
 	unsigned int registrationConfirmed : 1;
 	char password[PasswordLength];
 	Connection* connection;
+	Board* board;
 };
 
 class Player : public PlayerData {

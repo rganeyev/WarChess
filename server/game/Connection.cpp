@@ -350,8 +350,9 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 
 bool Connection::do_startGame(Player* opponent)
 {
-	Board board(player, opponent);
-	/*char tmp[2000];
+	player->board = new Board(player, opponent);
+	opponent->board = player->board;
+	char tmp[2000];
 	char figureName[5] ="Pa2\0";
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	
@@ -390,7 +391,6 @@ bool Connection::do_startGame(Player* opponent)
 	
 	bool result = sendRespond(GameStart, &streamWriter);
 	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
-	*/
 }
 
 

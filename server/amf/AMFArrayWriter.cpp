@@ -39,3 +39,10 @@ void AMFArrayWriter::addBoolean( String index, bool value )
 	_writer->write<unsigned char>(1);
 	_writer->write<unsigned char>(value);
 }
+
+void AMFArrayWriter::addString( String index, String value )
+{
+	_writer->writeUTF(index);
+	_writer->write<unsigned char>(2);
+	_writer->writeUTF(value);
+}

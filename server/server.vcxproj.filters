@@ -70,6 +70,12 @@
     <ClCompile Include="game\WaveFigure.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\Figure.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Pawn.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amf\AMFArrayWriter.h">
@@ -157,6 +163,12 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\WaveFigure.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Figure.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Pawn.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
