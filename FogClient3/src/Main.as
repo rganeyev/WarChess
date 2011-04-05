@@ -55,10 +55,10 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			menuDisplayObjects = new Array();
 			// entry point
-			//textInput = new TextInput();
-			//textInput.addEventListener(ComponentEvent.ENTER, start);
-			//addTextInput(textInput, 0, 0, 100, 30);
-			start(null);
+			textInput = new TextInput();
+			textInput.addEventListener(ComponentEvent.ENTER, start);
+			addTextInput(textInput, 0, 0, 100, 30);
+			//start(null);
 			
 		}
 		
@@ -68,8 +68,8 @@
 		}
 		
 		private function start(e: ComponentEvent): void {
-			//myId = uint(textInput.text);
-			myId = 3371777;
+			myId = uint(textInput.text);
+			//myId = 3371777;
 			if (textInput != null) {
 				removeChild(textInput);
 			}
