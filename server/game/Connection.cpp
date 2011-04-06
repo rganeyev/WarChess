@@ -343,6 +343,9 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 
 	//if accepted game
 	if (response == 0) {
+		PlayerManager::instance()->getPlayer(id)->removeSentChallenge(player->id);
+		player->removeReceivedChallenge(id);
+
 		return do_startGame(PlayerManager::instance()->getPlayer(id));
 	}
 	return sendError(AcceptInvite, RefuseGame);
@@ -352,8 +355,12 @@ bool Connection::do_startGame(Player* opponent)
 {
 	player->board = new Board(player, opponent);
 	opponent->board = player->board;
+
+	player->opponent = opponent;
+	opponent->opponent = player;
+	//TODO: delete opponent on game end
 	char tmp[2000];
-	char figureName[5] ="Pa2\0";
+	char figureName[] ="Pa2\0";
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 	
 	
@@ -363,7 +370,7 @@ bool Connection::do_startGame(Player* opponent)
 		//init white figures
 		figures.writeArray(String("white", 5));
 		AMFArrayWriter whiteWriter = AMFArrayWriter(&streamWriter);
-		whiteWriter.begin(8);
+		whiteWriter.begin(9);
 			figureName[2] = '2';
 			for (unsigned int i = 0; i < 8; ++i) {	
 				figureName[1] = (char)('a' + i);
@@ -372,23 +379,31 @@ bool Connection::do_startGame(Player* opponent)
 					whiteFigure.writeUTF(String("fig", 3), String(figureName, 3));
 				whiteFigure.end();
 			}
+			AMFObjectWriter whiteFigure = whiteWriter.addObject(toString(8));
+			whiteFigure.begin();
+				whiteFigure.writeUTF(String("fig", 3), String("Ke1", 3));
+			whiteFigure.end();
 		whiteWriter.end();
 
 		//init black figures
 		figures.writeArray(String("black", 5));
 		AMFArrayWriter blackWriter = AMFArrayWriter(&streamWriter);
-		blackWriter.begin(8);
+		blackWriter.begin(9);
 		figureName[2] = '7';
 		for (unsigned int i = 0; i < 8; ++i) {
 			figureName[1] = (char)('a' + i);
 			AMFObjectWriter blackFigure = blackWriter.addObject(toString(i));
 			blackFigure.begin();
-			blackFigure.writeUTF(String("fig", 3), String(figureName, 3));
+				blackFigure.writeUTF(String("fig", 3), String(figureName, 3));
 			blackFigure.end();
 		}
+		AMFObjectWriter blackFigure = blackWriter.addObject(toString(8));
+		blackFigure.begin();
+			blackFigure.writeUTF(String("fig", 3), String("Ke8", 3));
+		blackFigure.end();
 		blackWriter.end();
 	figures.end();
-	
+
 	bool result = sendRespond(GameStart, &streamWriter);
 	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
 }
@@ -448,20 +463,21 @@ bool Connection::do_move( unsigned int messageLength )
 		}
 	}
 	request.end();
-	//TODO: authenticate move
-	//TODO: send to another client
-	return do_informMove(from, to);
+	
+
+	Result ret = player->board->move(from.ptr(), to.ptr());
+	if (ret == Success) {
+		char tmp[200];
+		AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+		AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
+		objectWriter.begin();
+			objectWriter.writeBoolean(String("turn", 4), player->board->getTurn());
+			objectWriter.writeUTF(String("from", 4), from);
+			objectWriter.writeUTF(String("to", 2), to);
+		objectWriter.end();
+		return sendRespond(Move, &streamWriter) && player->opponent->connection->sendRespond(Move, &streamWriter);
+	} else {
+		return sendError(Move, IllegalMove);
+	}
 }
 
-bool Connection::do_informMove( String from, String to )
-{
-	char tmp[200];
-	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-	AMFObjectWriter moveWriter = AMFObjectWriter(&streamWriter);
-	moveWriter.begin();
-		moveWriter.writeBoolean(String("whiteMove", 9), true);
-		moveWriter.writeUTF(String("from", 4), from);
-		moveWriter.writeUTF(String("to", 2), to);
-	moveWriter.end();	
-	return sendRespond(InformMove, &streamWriter);
-}

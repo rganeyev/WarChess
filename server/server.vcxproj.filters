@@ -76,6 +76,7 @@
     <ClCompile Include="game\Pawn.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\King.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amf\AMFArrayWriter.h">
@@ -171,5 +172,6 @@
     <ClInclude Include="game\Pawn.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="game\King.h" />
   </ItemGroup>
 </Project>

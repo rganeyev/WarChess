@@ -13,5 +13,6 @@ enum Result
 	PlayerAlreadyAuthorized = 8,
 	PlayerAlreadyChallenged = 9,
 	RefuseGame = 10,
-	UnknownProblem = 11,
+	IllegalMove = 11,
+	UnknownProblem = 12,
 };

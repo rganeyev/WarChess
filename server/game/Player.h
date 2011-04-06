@@ -48,6 +48,7 @@ public:
 	void commit();
 	bool addSentChallenge(unsigned int oppId);
 	bool addReceivedChallenge(unsigned int oppId);
+	void removeSentChallenge(unsigned int oppId);
 	void removeReceivedChallenge(unsigned int oppId);
 	void clearSentChallenges();
 
@@ -68,6 +69,7 @@ public:
 
 	std::set<unsigned int> sentChallenges;
 	std::set<unsigned int> receivedChallenges;
+	Player* opponent;
 private:
 	boost::shared_mutex rwmutex;
 };

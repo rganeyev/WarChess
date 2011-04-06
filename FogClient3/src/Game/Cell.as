@@ -38,13 +38,16 @@
 		
 		/// puts figure into cell
 		public function setFigure(newFigure: Figure): void {
+			
 			if (newFigure == null) {
 				return;
 			}
+			
 			if (figure != null) {
 				removeFigure();
 			}
 			figure = newFigure;
+			figure.cell = this;
 			resetFigure();
 		}
 		

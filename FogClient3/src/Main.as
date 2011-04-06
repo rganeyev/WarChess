@@ -55,10 +55,10 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			menuDisplayObjects = new Array();
 			// entry point
-			textInput = new TextInput();
-			textInput.addEventListener(ComponentEvent.ENTER, start);
-			addTextInput(textInput, 0, 0, 100, 30);
-			//start(null);
+			//textInput = new TextInput();
+			//textInput.addEventListener(ComponentEvent.ENTER, start);
+			//addTextInput(textInput, 0, 0, 100, 30);
+			start(null);
 			
 		}
 		
@@ -68,8 +68,8 @@
 		}
 		
 		private function start(e: ComponentEvent): void {
-			myId = uint(textInput.text);
-			//myId = 3371777;
+			//myId = uint(textInput.text);
+			myId = 3371777;
 			if (textInput != null) {
 				removeChild(textInput);
 			}
@@ -110,7 +110,7 @@
 			connection.addGameEventListener(GameEvent.AddOnlinePlayer, addPlayerToOnlineList);
 			connection.addGameEventListener(GameEvent.RemoveOnlinePlayer, removePlayerFromOnlineList);
 			connection.addGameEventListener(GameEvent.GameStart, startGame);
-			connection.addGameEventListener(GameEvent.InformMove, onInformedMove);
+			connection.addGameEventListener(GameEvent.Move, onInformedMove);
 			
 			connection.onConnected = onConnected;
 			connection.connect();
@@ -258,7 +258,10 @@
 		
 		private function onInformedMove(result: uint, response: Object): void {
 			checkResult(result);
-			board.getMove(response.whiteTurn, response.from, response.to);
+			if (result != 0) {
+				return;
+			}
+			board.getMove(response.turn, response.from, response.to);
 		}
 		
 		private function getErrorDescription(errorCode: uint): String {
@@ -273,7 +276,8 @@
 				case 7: return "OutOfMemory";
 				case 8: return "PlayerAlreadyAuthorized"; 
 				case 9: return "PlayerAlreadyChallenged";
-				case 10: return "RefuseGame"
+				case 10: return "RefuseGame";
+				case 11:return "IllegalMove";
 				default: return "Unknown error";
 			}
 		}

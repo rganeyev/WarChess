@@ -101,6 +101,7 @@
     <ClCompile Include="game\Board.cpp" />
     <ClCompile Include="game\Connection.cpp" />
     <ClCompile Include="game\Figure.cpp" />
+    <ClCompile Include="game\King.cpp" />
     <ClCompile Include="game\Pawn.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="game\PlayerManager.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="game\Connection.h" />
     <ClInclude Include="game\Figure.h" />
     <ClInclude Include="game\GameEvent.h" />
+    <ClInclude Include="game\King.h" />
     <ClInclude Include="game\Pawn.h" />
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="game\PlayerManager.h" />

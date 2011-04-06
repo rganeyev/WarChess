@@ -53,6 +53,7 @@
 			this.whiteTurn = whiteTurn;
 			var toCell: Cell = getCellByString(to);
 			var fromCell: Cell = getCellByString(from);
+			
 			toCell.setFigure(fromCell.getFigure());
 			fromCell.removeFigure();
 			

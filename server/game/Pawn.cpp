@@ -13,9 +13,9 @@ Pawn::~Pawn()
 }
 
 
-bool Pawn::canMove( string to )
+bool Pawn::canMove( const char* to )
 {
-	assert(to.size() == 2);
+	//assert(strlen(to) == 2);
 
 	unsigned int toX = to[1];
 	unsigned int toY = to[0];
@@ -30,6 +30,9 @@ bool Pawn::canMove( unsigned int x, unsigned int y )
 	}
 
 	if (this->y == y) {
+		if (abs((int)(x - this->x)) > 2) {
+			return false;
+		}
 		//try to move forward
 		if (!board->isCellEmpty(x, y)) {
 			return false;

@@ -176,6 +176,13 @@ void Player::removeReceivedChallenge( unsigned int oppId )
 	unlock();
 }
 
+void Player::removeSentChallenge( unsigned int oppId )
+{
+	lock();
+		sentChallenges.erase(oppId);
+	unlock();
+}
+
 void Player::clearSentChallenges()
 {
 	lock();

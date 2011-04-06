@@ -27,8 +27,8 @@ public:
 	bool do_acceptInvite(unsigned int messageLength);
 	bool do_move(unsigned int messageLength);
 	
-	bool do_informMove(String from, String to);
 	bool do_startGame(Player* opponent);
+	//bool do_endGame()
 	Result informPlayersWithOnlinePlayer(unsigned int id );
 	Result informPlayersWithOfflinePlayer(unsigned int id );
 	Result informPlayers(GameEvent event, unsigned int id);

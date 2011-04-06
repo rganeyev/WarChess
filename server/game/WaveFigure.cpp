@@ -1,8 +1,8 @@
 #include "WaveFigure.h"
 
-bool WaveFigure::canMove( string to, int dx, int dy )
+bool WaveFigure::canMove( const char* to, int dx, int dy )
 {
-	assert(to.size() == 2);
+	assert(strlen(to) == 2);
 	unsigned int toX = to[1];
 	unsigned int toY = to[0];
 	unsigned int tmpX = x;

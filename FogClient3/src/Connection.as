@@ -7,7 +7,6 @@ package
 	import flash.utils.ByteArray;
 	import GameEvent;
 	import flash.net.ObjectEncoding;
-	import fl.controls.List;
 	
 	/**
 	 * ...
