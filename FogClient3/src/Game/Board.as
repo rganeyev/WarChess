@@ -1,5 +1,6 @@
 ﻿package Game
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.system.ApplicationDomain;
 	import Game.Figure;
@@ -12,13 +13,15 @@
 	 */
 	public class Board extends Sprite
 	{
+		private var objectsOnBoard: uint = 0;
 		private const horizName: Array =  new Array( "a", "b", "c", "d", "e", "f", "g", "h" );
-		private const vertName: Array  =  new Array ("1", "2", "3", "4", "5", "6", "7", "8");
+		private const vertName: Array  =  new Array ( "1", "2", "3", "4", "5", "6", "7", "8" );
 		
 		private static var cells: Array = new Array(8);
 	
 		private var whiteTurn: Boolean = Figure.WHITE;
 		private var field: Field;
+		
 		
 		private var fogCells:Array = new Array();
 		private var whites:  Array = new Array("Pa2","Pb2","Pc2","Pd2", "Pe2","Pf2","Pg2","Ph2","Ra1","Rh1","Nb1","Ng1","Bc1","Bf1","Qd1","Ke1");
@@ -48,14 +51,30 @@
 			
 		}
 		
+		public function moveFigureToFront(fig: Figure): void {
+			setChildIndex(fig, objectsOnBoard - 1);
+		}
+		
 		//gets move from server
 		public function getMove(whiteTurn: Boolean, from: String, to: String): void {
+			//debug
+			if (whiteTurn == this.whiteTurn) {
+				return;
+			}
+			
 			this.whiteTurn = whiteTurn;
 			var toCell: Cell = getCellByString(to);
 			var fromCell: Cell = getCellByString(from);
 			
-			toCell.setFigure(fromCell.getFigure());
+			//delete pawned figure
+			var pawnedFigure: Figure = toCell.getFigure();
+			var figure: Figure = fromCell.getFigure();
+			
+			if (pawnedFigure != null) {
+				removeBoardChild(pawnedFigure);
+			}
 			fromCell.removeFigure();
+			toCell.setFigure(figure);
 			
 		}
 		
@@ -82,8 +101,7 @@
 					field.name = horizName[x] + vertName[y];
 					field.setColor((x % 2) !=  (y % 2));
 					tmpArray.push(field);
-					addChild(tmpArray[x]);
-					
+					addBoardChild(tmpArray[x]);
 					wPos += Cell.size;
 				}
 				
@@ -91,6 +109,15 @@
 			}
 		}
 		
+		private function addBoardChild(obj: DisplayObject): void {
+			objectsOnBoard++;
+			addChild(obj);
+		}
+		
+		private function removeBoardChild(obj: DisplayObject): void {
+			objectsOnBoard--;
+			removeChild(obj);
+		}
 		/////////////////////////
 		//figure initialization
 		/////////////////////////
@@ -103,12 +130,8 @@
 						else		 figure = new RookBlack();
 						break;
 					case "B":
-						if (isWhite) {
-							figure = new BishopBlack(); 
-							//having bug here - don't change
-						} else {
-							figure = new BishopBlack();
-						}
+						if (isWhite) figure = new BishopBlack(); 
+						else		 figure = new BishopBlack();
 						break;
 					case "N":
 						if (isWhite) figure = new KnightWhite();
@@ -138,13 +161,13 @@
 				var cell: Cell = getCellByString(colorPiece[k].fig.substr(1, 2));
 				figure.cell = cell;
 				cell.setFigure(figure);
-				addChild(figure);
+				addBoardChild(figure);
 			}
 		}
 		
-		private function getCellByString(n : String): Cell {
-			var tmpY : int = n.charCodeAt(0) - String("a").charCodeAt(0);
-			var tmpX : int = n.charCodeAt(1) - String("1").charCodeAt(0);
+		private function getCellByString(cell : String): Cell {
+			var tmpY : int = cell.charCodeAt(0) - String("a").charCodeAt(0);
+			var tmpX : int = cell.charCodeAt(1) - String("1").charCodeAt(0);
 			return (cells[tmpX][tmpY]);
 		}
 		

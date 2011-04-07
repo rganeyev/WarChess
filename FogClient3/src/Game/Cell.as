@@ -46,6 +46,7 @@
 			if (figure != null) {
 				removeFigure();
 			}
+			
 			figure = newFigure;
 			figure.cell = this;
 			resetFigure();

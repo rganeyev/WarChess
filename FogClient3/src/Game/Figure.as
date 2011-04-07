@@ -27,6 +27,7 @@
 			if (figureColor != Board(parent).getTurn()) { 
 				return;
 			}		
+			Board(parent).moveFigureToFront(this);
 			startDrag(true);
 		}
 		
