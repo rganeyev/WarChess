@@ -25,12 +25,14 @@ bool King::canMove(const Position p) const
 	
 	
 	//короткая рокировка
-	if (!moved && p.x == startX && p.y == 6) {
+	if (!moved && p.x == startX && p.y == 6 && !board->canFigureEatOnPosition(Position(x, y), !figureColor)) {
 		Figure* rook = board->getFigure(Position(startX, 7));
-		if (rook == NULL || strcmp("Rook", rook->toString()) == 0 || rook->isMoved() || rook->figureColor != figureColor) {
+		//if (strcmp("Rook", rook->toString()) != 0) {
+		if (rook == NULL || strcmp("Rook", rook->toString()) != 0 || rook->isMoved() || rook->figureColor != figureColor) {
 			return false;
 		}
-		for (unsigned int j = 4; j < 7; j++) {
+	//TODO: fix bug on check
+		for (unsigned int j = 5; j < 7; j++) {
 			if (!board->isCellEmpty(Position(startX, j))  || board->canFigureEatOnPosition(Position(startX, j), !figureColor)) {
 				return false;
 			}
@@ -39,12 +41,12 @@ bool King::canMove(const Position p) const
 	} 
 
 	//длинная рокировка
-	if (!moved && p.x == startX && p.y == 2) {
+	if (!moved && p.x == startX && p.y == 2 && !board->canFigureEatOnPosition(Position(x, y), !figureColor)) {
 		Figure* rook = board->getFigure(Position(startX, 0));
-		if (rook == NULL || strcmp("Rook", rook->toString()) == 0 || rook->isMoved() || rook->figureColor != figureColor) {
+		if (rook == NULL || strcmp("Rook", rook->toString()) != 0 || rook->isMoved() || rook->figureColor != figureColor) {
 			return false;
 		}
-		for (unsigned int j = 2; j < 5; j++) {
+		for (unsigned int j = 2; j < 4; j++) {
 			if (!board->isCellEmpty(Position(startX, j))  || board->canFigureEatOnPosition(Position(startX, j), !figureColor)) {
 				return false;
 			}
