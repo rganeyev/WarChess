@@ -2,34 +2,38 @@
 
 #include <string>
 #include <vector>
-#include "game/Figure.h"
-#include "game/Player.h"
-#include "game\Result.h"
+#include "Figure.h"
+#include "Player.h"
+#include "Result.h"
+#include "Position.h"
 
 class Figure;
 
+
 class Board {
 public:
-	Board(Player* white, Player* black);
+	Board(Player* white, Player* black, AMFWriter* streamWriter);
 	~Board();
 	//if move is legal, moves. otherwhise returns illegal move
-	Result move(const char* from, const char* to);
+	bool move(const char* from, const char* to);
 	
-	bool isCellEmpty(unsigned int x, unsigned int y);
-	Figure* getFigure(unsigned int x, unsigned int y);
-	void setFigure(Figure* figure, unsigned int x, unsigned int y);
+	bool isCellEmpty(const Position p) const;
+	Figure* getFigure(const Position p);
+	void setFigure(Figure* figure, const Position p);
 
 	//check, if any figure of that color can reach point x, y
-	bool canFigureReachPoint(unsigned int x, unsigned int y, bool figureColor);
+	bool canFigureEatOnPosition(const Position p,const bool figureColor) const;
 	
-	unsigned int getKingX(bool figureColor);
-	unsigned int getKingY(bool figureColor);
-	bool isLeftRookMoved(bool figureColor);
-	bool isRightRookMoved(bool figureColor);
-	bool getTurn();
+	Position whiteKingPos;
+	Position blackKingPos;
+	Position getKingPosition(const bool figureColor);
+	bool getTurn() const;
 private: 
-	void initWhiteFigures();
-	void initBlackFigures();
+	void addFiguresToBoard(bool figureColor, AMFWriter* streamWriter);
+	void initFigures(AMFWriter* streamWriter);
+	void initWhiteFigures(AMFWriter* streamWriter);
+	void initBlackFigures(AMFWriter* streamWriter);
+
 	bool checkForCheckMate();
 	bool checkLegalMove();
 	
@@ -37,14 +41,5 @@ private:
 	Player* blackPlayer;
 	
 	Figure* boardState[8][8];
-
-	unsigned int whiteKingX;
-	unsigned int whiteKingY;
-	unsigned int blackKingX;
-	unsigned int blackKingY;
-	bool whiteLeftRookMoved;
-	bool whiteRightRookMoved;
-	bool blackLeftRookMoved;
-	bool blackRightRookMoved;
 	bool moveTurn;
 };

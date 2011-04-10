@@ -12,57 +12,84 @@ Figure::~Figure()
 }
 
 
-bool Figure::canReach( unsigned int x, unsigned y )
+bool Figure::canReach(const Position p ) const
 {
-	if (x > 7 || y > 7) {
+	if (p.x > 7 || p.y > 7) {
 		return false;
 	}
 
-	if (board->isCellEmpty(x, y)) {
+	if (board->isCellEmpty(p)) {
 		return true;
 	}
-	return (figureColor != board->getFigure(x, y)->figureColor);
+	return (figureColor != board->getFigure(p)->figureColor);
 }
 
-bool Figure::canMove( const char* to )
+bool Figure::canMove(const char* to ) const
 {
 	//assert(strlen(to) == 2);
 	//заглушка
 	return true;
 }
 
-bool Figure::canMove( unsigned int x, unsigned int y )
+bool Figure::canMove(const Position p ) const
 {
 	//заглушка
 	return true;
 }
 
-bool Figure::isAllowedMove( unsigned int x, unsigned int y )
+bool Figure::canEat(const Position p ) const
 {
-	if (!canMove(x, y)) {
+	return true;
+}
+
+bool Figure::isAllowedMove(const Position p )
+{
+	if (!canMove(p)) {
 		return false;
 	}
-
-	
+		
+	Position fromCell(this->x, this->y);
 	//try to move
-	Figure* pawnedFigure = board->getFigure(x, y);
-	board->setFigure(this, x, y);
-	board->setFigure(NULL, this->x, this->y);
+	Figure* pawnedFigure = board->getFigure(p);
+	board->setFigure(this, p);
+	board->setFigure(NULL, fromCell);
 
-	bool ret = !board->canFigureReachPoint(board->getKingX(figureColor), board->getKingY(figureColor), !figureColor);
+	bool ret = !board->canFigureEatOnPosition(board->getKingPosition(figureColor), !figureColor);
 
-	board->setFigure(pawnedFigure, x, y);
-	board->setFigure(this, this->x, this->y);
+	board->setFigure(pawnedFigure, p);
+	board->setFigure(this, fromCell);
 	return ret;
 }
 
-void Figure::move( unsigned int x, unsigned int y )
+bool Figure::move( Position p )
 {
-	Figure* pawnedFigure = board->getFigure(x, y);
-	this->x = x;
-	this->y = y;
-	board->setFigure(this, x, y);
+	if (!isAllowedMove(p)) {
+		return false;
+	}
+	Figure* pawnedFigure = board->getFigure(p);
+	board->setFigure(NULL, Position(this->x, this->y));
+
+	setFigurePosition(p);
+	
+	board->setFigure(this, p);
 	if (pawnedFigure != NULL) {
 		delete pawnedFigure;
 	}
+	return true;
+}
+
+char* Figure::toString()
+{
+	return "Figure";
+}
+
+bool Figure::isMoved()
+{
+	return false;
+}
+
+void Figure::setFigurePosition( const Position p )
+{
+	x = p.x;
+	y = p.y;
 }

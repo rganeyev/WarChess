@@ -112,19 +112,11 @@ bool Connection::readMessage( unsigned int length ) {
 
 bool Connection::do_auth( unsigned int messageLength ) {
 	PlayerManager* playerManager = PlayerManager::instance();
-	char password_pool[PasswordLength];
-	String password;
-	unsigned int id;
+
 
 	AMFReader request = AMFReader(buffer, messageLength);
-	while (!request.empty()) {
-		String argName = request.readArgName();
-		if (argName == String("password", 8)) {
-			password = request.readUTF(password_pool, sizeof(password_pool));
-		} else if (argName == String("id", 2)) {
-			id = request.readUnsignedInt();
-		}
-	}
+	enforce(request.readArgName() == String("id", 2));
+	unsigned int id = request.readUnsignedInt();
 	request.end();
 
 	if (this->player != NULL) {
@@ -136,14 +128,7 @@ bool Connection::do_auth( unsigned int messageLength ) {
 		return sendError(Auth, PlayerNotFound);
 	}
 
-	Result result;
-
 	player->lock();
-
-	if (password != String(player->password, PasswordLength, false)) {
-		result = PasswordIsIncorrect;
-		goto error;
-	}
 
 	if (!player->registrationConfirmed) {
 		player->registrationConfirmed = true;
@@ -161,15 +146,8 @@ bool Connection::do_auth( unsigned int messageLength ) {
 
 		char tmp[4];
 		AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-		/*AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);
-		objectWriter.begin();
-		objectWriter.end();
-		*/
 		return sendRespond(Auth, &streamWriter);
 	}
-error:
-	player->unlock();
-	return sendError(Auth, result);
 }
 
 
@@ -190,10 +168,6 @@ bool Connection::do_register( unsigned int messageLength ) {
 
 	char tmp[200];
 	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-	AMFObjectWriter playerWriter = AMFObjectWriter(&streamWriter);
-	playerWriter.begin();
-		playerWriter.writeUTF(String("password", 8), String(player->password, PasswordLength, false));
-	playerWriter.end();
 
 	return sendRespond(Register, &streamWriter);
 }
@@ -235,15 +209,7 @@ void Connection::skipMessage( unsigned int length ) {
 }
 
 Result Connection::createNewPlayer( unsigned int id, Player** pPlayer ) {
-	char password[PasswordLength] = { 'P', 'A', 'S', 'S', 'W', 'O', 'R', 'D' };
-	// a code to generate random one
-	/*
-	for (int i = 0; i < PasswordLength; ++i) {
-			password[i] = 33 + (rand()%94);
-		}*/
-	
-
-	Player* player = new Player(id, String(password, PasswordLength, false));
+	Player* player = new Player(id, String("1", 1, true));
 	player->lock();
 
 	PlayerManager* playerManager = PlayerManager::instance();
@@ -322,7 +288,6 @@ bool Connection::do_inviteToPlay( unsigned int messageLength )
 	return (player->addSentChallenge(oppId)) && (opponent->addReceivedChallenge(player->id)); 
 }
 
-//TODO: implement this method
 bool Connection::do_acceptInvite( unsigned int messageLength )
 {
 	//receive id & response
@@ -353,59 +318,17 @@ bool Connection::do_acceptInvite( unsigned int messageLength )
 
 bool Connection::do_startGame(Player* opponent)
 {
-	player->board = new Board(player, opponent);
+	char tmp[20000];
+	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
+	player->board = new Board(player, opponent, &streamWriter);
 	opponent->board = player->board;
 
 	player->opponent = opponent;
 	opponent->opponent = player;
 	//TODO: delete opponent on game end
-	char tmp[2000];
-	char figureName[] ="Pa2\0";
-	AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
-	
-	
-	AMFObjectWriter figures = AMFObjectWriter(&streamWriter);
-	figures.begin();
-		
-		//init white figures
-		figures.writeArray(String("white", 5));
-		AMFArrayWriter whiteWriter = AMFArrayWriter(&streamWriter);
-		whiteWriter.begin(9);
-			figureName[2] = '2';
-			for (unsigned int i = 0; i < 8; ++i) {	
-				figureName[1] = (char)('a' + i);
-				AMFObjectWriter whiteFigure = whiteWriter.addObject(toString(i));
-				whiteFigure.begin();
-					whiteFigure.writeUTF(String("fig", 3), String(figureName, 3));
-				whiteFigure.end();
-			}
-			AMFObjectWriter whiteFigure = whiteWriter.addObject(toString(8));
-			whiteFigure.begin();
-				whiteFigure.writeUTF(String("fig", 3), String("Ke1", 3));
-			whiteFigure.end();
-		whiteWriter.end();
 
-		//init black figures
-		figures.writeArray(String("black", 5));
-		AMFArrayWriter blackWriter = AMFArrayWriter(&streamWriter);
-		blackWriter.begin(9);
-		figureName[2] = '7';
-		for (unsigned int i = 0; i < 8; ++i) {
-			figureName[1] = (char)('a' + i);
-			AMFObjectWriter blackFigure = blackWriter.addObject(toString(i));
-			blackFigure.begin();
-				blackFigure.writeUTF(String("fig", 3), String(figureName, 3));
-			blackFigure.end();
-		}
-		AMFObjectWriter blackFigure = blackWriter.addObject(toString(8));
-		blackFigure.begin();
-			blackFigure.writeUTF(String("fig", 3), String("Ke8", 3));
-		blackFigure.end();
-		blackWriter.end();
-	figures.end();
-
-	bool result = sendRespond(GameStart, &streamWriter);
-	return  result & opponent->connection->sendRespond(GameStart, &streamWriter);
+	bool result = sendRespond(AcceptInvite, &streamWriter);
+	return  result & opponent->connection->sendRespond(AcceptInvite, &streamWriter);
 }
 
 
@@ -465,8 +388,8 @@ bool Connection::do_move( unsigned int messageLength )
 	request.end();
 	
 
-	Result ret = player->board->move(from.ptr(), to.ptr());
-	if (ret == Success) {
+	bool ret = player->board->move(from.ptr(), to.ptr());
+	if (ret) {
 		char tmp[200];
 		AMFWriter streamWriter = AMFWriter(tmp, sizeof(tmp));
 		AMFObjectWriter objectWriter = AMFObjectWriter(&streamWriter);

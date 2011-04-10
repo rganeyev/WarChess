@@ -67,8 +67,8 @@
 			connection.send(GameEvent.Move, { from: from, to: to } );
 		}
 		
-		private function start(e: ComponentEvent): void {
-			//myId = uint(textInput.text);
+		private function start( e: ComponentEvent): void {
+			//myId = parseInt(textInput.text);
 			myId = 3371777;
 			if (textInput != null) {
 				removeChild(textInput);
@@ -106,10 +106,10 @@
 			connection.addGameEventListener(GameEvent.Auth, onAuthComplete);
 			connection.addGameEventListener(GameEvent.GetOnlinePlayers, onGotOnlineList);
 			connection.addGameEventListener(GameEvent.InviteToPlay, onReceivedAnswerOnInvitation);
-			connection.addGameEventListener(GameEvent.GotInvitation, onGotInvitation);
+			connection.addGameEventListener(GameEvent.ReceiveInvite, onGotInvitation);
 			connection.addGameEventListener(GameEvent.AddOnlinePlayer, addPlayerToOnlineList);
 			connection.addGameEventListener(GameEvent.RemoveOnlinePlayer, removePlayerFromOnlineList);
-			connection.addGameEventListener(GameEvent.GameStart, startGame);
+			connection.addGameEventListener(GameEvent.AcceptInvite, startGame);
 			connection.addGameEventListener(GameEvent.Move, onInformedMove);
 			
 			connection.onConnected = onConnected;
@@ -184,7 +184,7 @@
 				trace(response[i].id);
 				var caption: String = int(response[i].id).toString();
 				if (response[i].id == myId) {
-					caption += "me";
+					caption += " me";
 				}
 				onlineList.addItem( {label: caption, data: response[i].id} );
 			}
@@ -213,7 +213,7 @@
 		
 		private function auth(): void {
 			//trace("Logging in.");
-			connection.send(GameEvent.Auth, { id: myId, password: myPassword } );
+			connection.send(GameEvent.Auth, { id: myId } );
 		}
 		
 		private function getOnlinePlayers() : void {

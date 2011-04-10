@@ -18,9 +18,6 @@ class AMFObjectWriter;
 class Connection;
 class Board;
 
-enum {
-	PasswordLength = 8,
-};
 
 struct PlayerData {
 	OVERLAPPED overlapped;
@@ -30,7 +27,6 @@ struct PlayerData {
 	unsigned int gold;
 
 	unsigned int registrationConfirmed : 1;
-	char password[PasswordLength];
 	Connection* connection;
 	Board* board;
 };

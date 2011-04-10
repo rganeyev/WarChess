@@ -22,8 +22,6 @@ Player::Player(unsigned int id, String password) {
 	this->id = id;
 	this->experience = 100;
 	this->gold = 100;
-	assert(password.length() == PasswordLength);
-	memcpy(this->password, password.ptr(), PasswordLength);
 }
 
 Player::~Player() {

@@ -41,8 +41,8 @@
 			initFog();
 			
 			//figure init
-			initFigures(whiteFigures, true);
-			initFigures(blackFigures, false);	
+			initFigures(whiteFigures, Figure.WHITE);
+			initFigures(blackFigures, Figure.BLACK);	
 		}
 		
 		//sends move to server to validation
@@ -130,7 +130,7 @@
 						else		 figure = new RookBlack();
 						break;
 					case "B":
-						if (isWhite) figure = new BishopBlack(); 
+						if (isWhite) figure = new BishopWhite(); 
 						else		 figure = new BishopBlack();
 						break;
 					case "N":

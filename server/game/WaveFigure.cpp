@@ -1,22 +1,48 @@
 #include "WaveFigure.h"
 
-bool WaveFigure::canMove( const char* to, int dx, int dy )
+WaveFigure::WaveFigure( Board* board,const unsigned int x,const unsigned int y,const bool figureColor ) : Figure(board, x, y, figureColor)
 {
-	assert(strlen(to) == 2);
-	unsigned int toX = to[1];
-	unsigned int toY = to[0];
-	unsigned int tmpX = x;
-	unsigned int tmpY = y;
-	while (canReach(tmpX, tmpY)) {
-		if (tmpX == toX && tmpY == toY) {
+	//do nothing
+}
+
+bool WaveFigure::canWaveMove(const Position p,const int dx, const int dy ) const
+{
+	Position pos(x + dx, y + dy);
+	while (canReach(pos)) {
+		if (pos == p) {
 			return true;
 		}
-		if (board->isCellEmpty(tmpX, tmpY)) {
-			tmpX += dx;
-			tmpX += dy;
+		if (board->isCellEmpty(pos)) {
+			pos.x += dx;
+			pos.y += dy;
 		} else {
 			break;
 		}
 	}
 	return false;
+}
+
+bool WaveFigure::canEat(const Position p) const
+{
+	return canMove(p);
+}
+
+bool WaveFigure::canMove(const Position p ) const
+{
+	return false;
+}
+
+char* WaveFigure::toString()
+{
+	return "WaveFigure";
+}
+
+bool WaveFigure::isMoved()
+{
+	return false;
+}
+
+void WaveFigure::setFigurePosition( const Position p )
+{
+	Figure::setFigurePosition(p);
 }

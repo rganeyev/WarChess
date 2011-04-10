@@ -76,7 +76,24 @@
     <ClCompile Include="game\Pawn.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="game\King.cpp" />
+    <ClCompile Include="game\King.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Rook.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Bishop.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Queen.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Knight.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Position.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amf\AMFArrayWriter.h">
@@ -172,6 +189,23 @@
     <ClInclude Include="game\Pawn.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="game\King.h" />
+    <ClInclude Include="game\King.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Rook.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Bishop.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Queen.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Knight.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Position.h">
+      <Filter>game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
